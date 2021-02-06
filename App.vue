@@ -1,12 +1,20 @@
 <template>
   <view class="container">
-    <div class="innovaBg"></div>
-    <text>{{message}}</text>
+    
+      <b-img :source="'./assets/Innova/BG/background.png'"></b-img>
+      <text>{{message}}</text>
+    
+    
   </view>
 </template>
 
 <script>
-export default {
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+export default {  
   data: function() {
     return {
       message: "Hello World"
@@ -16,9 +24,7 @@ export default {
 </script>
 
 <style>
-.innovaBg {
-  background-image:url(https://vuejs.org/images/logo.png);
-}
+
 .container {
   background-color: white;
   align-items: center;
