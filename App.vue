@@ -1,38 +1,46 @@
 <template>
   <view class="container">
-    
-      <b-img :source="'./assets/Innova/BG/background.png'"></b-img>
-      <text>{{message}}</text>
-    
-    
+      <ImageBackground :source="require('./assets/Innova/BG/background.png')"
+        class="backgroundImage" resizeMode="stretch">
+        <!-- <app-navigator>
+        </app-navigator> -->
+      </ImageBackground>
   </view>
 </template>
 
 <script>
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-export default {  
+import {
+    createAppContainer,
+    createStackNavigator,
+  }  from "vue-native-router";
+
+import home from './screens/home/home.vue';
+import login from './screens/login/login.vue';
+
+const StackNavigator = createStackNavigator(
+  {
+  Home: home,
+  Login: login
+  },
+  {
+    initialRouteName: 'Login',
+  }
+);
+
+const AppNavigator = createAppContainer(StackNavigator);
+
+export default {
+  components: {AppNavigator},
+
   data: function() {
     return {
+      image: {uri: './assets/Innova/BG/background.png'},
       message: "Hello World"
     };
   }
 };
 </script>
-
-<style>
-
-.container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
   
-}
-.text-color-primary {
-  color: blue;
-}
+<style source="./assets/css/innova.css" >
 </style>
