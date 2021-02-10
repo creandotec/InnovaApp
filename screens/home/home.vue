@@ -4,54 +4,55 @@
         class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
                 <view class="row-header">
-                    <view class="header-container">
-                        <text class="text-color">Header</text>
-                        <!-- <image resizeMode="contain" :source="require('./../../assets/Innova/Home/configblanco.png')"/> -->
+                    <!-- <view class="header-container">
+                        <text class="text-color">HOME PAGE</text>
+                        <image resizeMode="contain" :source="require('./../../assets/Innova/Home/configblanco.png')"/>
+                    </view> -->
+
+                    <text class="screen-title">HOME PAGE</text>
+                    <image resizeMode="contain" :source="require('./../../assets/Innova/Home/configblanco.png')"/>
+                </view>
+
+                <view class="row-home">
+                    <view class="icon-container" :borderColor="'yellow'">
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/zonesoff.png')"/>
+                    </view>
+                    <view class="icon-container" borderColor="yellow" borderWidth=1>
+                        
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/louversoffch.png')"/>
                     </view>
                 </view>
 
-                <view class="row">
+                <view class="row-home">
                     <view class="icon-container">
                         
-                        <!-- <image class="icon" :source="require('./../../assets/Innova/Home/zonesoff.png')"/> -->
-                        <text class="text-color">Hola</text>
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/lightoff.png')"/>
                     </view>
                     <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon" :source="require('./../../assets/Innova/Home/louversoffch.png')"/> -->
-                    </view>
-                </view>
-
-                <view class="row">
-                    <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon"  :source="require('./../../assets/Innova/Home/lightoff.png')"/> -->
-                    </view>
-                    <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon" :source="require('./../../assets/Innova/Home/climateselectoff.png')"/> -->
+                        
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/climateselectoff.png')"/>
                     </view>
                 </view>
 
-                <view class="row">
+                <view class="row-home">
                     <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon"  :source="require('./../../assets/Innova/Home/lightoff.png')"/> -->
+                        
+                        <image class="icon"  resizeMode="contain" :source="require('./../../assets/Innova/Home/screensoff.png')"/>
                     </view>
                     <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon" :source="require('./../../assets/Innova/Home/climateselectoff.png')"/> -->
+                        
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/weatheroff.png')"/>
                     </view>
                 </view>
 
-                <view class="row">
+                <view class="row-home">
                     <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon"  :source="require('./../../assets/Innova/Home/lightoff.png')"/> -->
+                        
+                        <image class="icon"  resizeMode="contain" :source="require('./../../assets/Innova/Home/manoff.png')"/>
                     </view>
                     <view class="icon-container">
-                        <text class="text-color">Hola</text>
-                        <!-- <image class="icon" :source="require('./../../assets/Innova/Home/climateselectoff.png')"/> -->
+                        
+                        <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/multimedia.png')"/>
                     </view>
                 </view>
 
@@ -72,24 +73,37 @@ export default {
 </script>
 
 <style>
-    .text-color{
-        color: deepskyblue;
-        background-color: whitesmoke;
+    .icon{
+        flex:1;
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+    .screen-title{
+        flex:1;
+        font-weight: bold;
+        color: whitesmoke;
     }
     .header-container{
         flex:1;
         justify-content: center;
     }
     .row-header{
+        flex: 0.67;
         flex-direction: row;
-        align-items: center;
-        background-color: deepskyblue;
+        align-items: flex-end;
+        align-content: space-between;
     }
     .icon-container {
-        
+        flex:1;
+        flex-direction: row;
+        justify-content: center;
         align-items: center;
+        padding: 10%;
+        border-color:yellow;
+        border-width:2;        
     }
-    .row {
+    .row-home {
+        flex:1;
         flex-direction: row;
         align-items: stretch;
         justify-content:center;
