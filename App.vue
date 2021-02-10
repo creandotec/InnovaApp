@@ -1,11 +1,6 @@
 <template>
-  <view class="container">
-      <ImageBackground :source="require('./assets/Innova/BG/background.png')"
-        class="backgroundImage" resizeMode="stretch">
-        <!-- <app-navigator>
-        </app-navigator> -->
-      </ImageBackground>
-  </view>
+      <app-navigator>
+      </app-navigator>
 </template>
 
 <script>
@@ -21,11 +16,12 @@ import login from './screens/login/login.vue';
 const StackNavigator = createStackNavigator(
   {
   Home: home,
-  Login: login
+  Login: login,
   },
   {
     initialRouteName: 'Login',
-  }
+    headerMode: 'none'
+  },
 );
 
 const AppNavigator = createAppContainer(StackNavigator);
@@ -42,5 +38,13 @@ export default {
 };
 </script>
   
-<style source="./assets/css/innova.css" >
+<style>
+  .backgroundImage {
+    flex:1;
+  }
+  .container {
+    flex: 1;
+    background-color: blue;
+    flex-direction: column;
+  }
 </style>
