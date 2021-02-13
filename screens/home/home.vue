@@ -130,7 +130,11 @@
 <script>
 
 export default {
-    
+    props:{
+        navigation:{
+            type: Object
+        }
+    },
     data: function(){
         return{
 
@@ -139,6 +143,9 @@ export default {
     methods:{
         changeMenu: function(menu){
             alert("Se tocó la imagen" + menu);
+            if(menu == 3){
+                this.navigation.navigate("Lighthing");
+            }
         }
     }
 }

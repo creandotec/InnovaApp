@@ -12,11 +12,13 @@ import {
 
 import home from './screens/home/home.vue';
 import login from './screens/login/login.vue';
+import lighthing from './screens/Lighting/MainLighting.vue'
 
 const StackNavigator = createStackNavigator(
   {
   Home: home,
   Login: login,
+  Lighthing: lighthing
   },
   {
     initialRouteName: 'Login',
