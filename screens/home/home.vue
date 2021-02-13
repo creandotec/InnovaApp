@@ -1,6 +1,6 @@
 <template>
     <view class="container">
-        <ImageBackground :source="require('./../../assets/Innova/BG/background.png')"
+        <ImageBackground :source="require('./../../assets/Innova/BG/homepage.png')"
         class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
                 <view class="row-header">
@@ -10,7 +10,10 @@
                     </view> -->
 
                     <text class="screen-title">HOME PAGE</text>
-                    <image resizeMode="contain" style='margin-bottom:4%' :source="require('./../../assets/Innova/Home/configblanco.png')"/>
+                    <Pressable :on-press='() => changeMenu(0)'>
+                    <image resizeMode="contain" style='margin-bottom:4%' 
+                        :source="require('./../../assets/Innova/Home/configblanco.png')"/>
+                    </Pressable>
                 </view>
 
                 <view class="row-home">
@@ -18,8 +21,11 @@
                         <view :style="'flex:0.20;'">
                             <text class="menu-title-right">AREAS</text>
                         </view>
+                        
                         <view class="icon-container">
-                            <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" :source="require('./../../assets/Innova/Home/zonesoff.png')"/>
+                            <Pressable :on-press="() => changeMenu(1)">
+                                <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" :source="require('./../../assets/Innova/Home/zonesoff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     
@@ -28,7 +34,10 @@
                             <text class="menu-title-left">LOUVERS</text>
                         </view>
                         <view class="icon-container">
-                            <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" :source="require('./../../assets/Innova/Home/louversoffch.png')"/>
+                            <Pressable :on-press="()=> changeMenu(2)">
+                            <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" 
+                                :source="require('./../../assets/Innova/Home/louversoffch.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     
@@ -40,7 +49,10 @@
                             <text class="menu-title-right">LIGHTHING</text>
                         </view>
                         <view class="icon-container">
-                            <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/lightoff.png')"/>
+                            <Pressable :on-press="()=> changeMenu(3)">
+                                <image class="icon" resizeMode="contain" 
+                                :source="require('./../../assets/Innova/Home/lightoff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     
@@ -49,7 +61,10 @@
                             <text class="menu-title-left">CLIMATE</text>
                         </view>
                         <view class="icon-container">
-                            <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/climateselectoff.png')"/>
+                            <Pressable :on-press="()=> changeMenu(4)">
+                                <image class="icon" resizeMode="contain" 
+                                :source="require('./../../assets/Innova/Home/climateselectoff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     
@@ -61,16 +76,22 @@
                         <view style="flex:0.20;">
                             <text class="menu-title-right">SCREENS</text>
                         </view>
-                        <view class="icon-container">    
-                            <image class="icon" style="margin-top:9%; margin-bottom:9%;" resizeMode="contain" :source="require('./../../assets/Innova/Home/screensoff.png')"/>
+                        <view class="icon-container">
+                            <Pressable :on-press="()=> changeMenu(5)">    
+                                <image class="icon" style="margin-top:9%; margin-bottom:9%;" 
+                                    resizeMode="contain" :source="require('./../../assets/Innova/Home/screensoff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     <view class="menu-button-container">
                         <view style="flex:0.20;">
                             <text class="menu-title-left">WEATHER</text>
                         </view>
-                        <view class="icon-container">    
-                            <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/weatheroff.png')"/>
+                        <view class="icon-container">
+                            <Pressable :on-press="()=> changeMenu(6)">    
+                                <image class="icon" resizeMode="contain" 
+                                :source="require('./../../assets/Innova/Home/weatheroff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
                     
@@ -81,8 +102,11 @@
                         <view style="flex:0.20;">
                             <text class="menu-title-right">SCENES</text>
                         </view>
-                        <view class="icon-container">    
-                            <image class="icon"  resizeMode="contain" :source="require('./../../assets/Innova/Home/manoff.png')"/>
+                        <view class="icon-container">
+                            <Pressable :on-press="()=> changeMenu(7)">    
+                                <image class="icon"  resizeMode="contain" 
+                                :source="require('./../../assets/Innova/Home/manoff.png')"/>
+                            </Pressable>
                         </view>
                     </view>
 
@@ -104,10 +128,17 @@
 </template>
 
 <script>
+
 export default {
+    
     data: function(){
         return{
 
+        }
+    },
+    methods:{
+        changeMenu: function(menu){
+            alert("Se tocó la imagen" + menu);
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <view class="container">
-        <ImageBackground :source="require('./../../assets/Innova/BG/background.png')"
+        <ImageBackground :source="require('./../../assets/Innova/BG/homepage.png')"
         class="backgroundImage" resizeMode="stretch">
             <button title="Go to home screen" @press="goToHomeScreen"></button>
         </ImageBackground>
