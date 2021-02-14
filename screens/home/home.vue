@@ -221,7 +221,6 @@ export default {
         flex: 1;
         flex-direction: column;
         justify-content: center;
-        background-color: powderblue;
     }
     .center {
         margin-left: auto;
