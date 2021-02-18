@@ -142,9 +142,21 @@ export default {
     },
     methods:{
         changeMenu: function(menu){
-            alert("Se tocó la imagen" + menu);
+            
+            if(menu == 2){
+                this.navigation.navigate("Louvers");
+            }
             if(menu == 3){
                 this.navigation.navigate("Lighthing");
+            }
+            if(menu == 4){
+                this.navigation.navigate("Climate");
+            }
+            if(menu == 5){
+                this.navigation.navigate("Screens");
+            }
+            if(menu == 6){
+                this.navigation.navigate("Weather");
             }
         }
     }

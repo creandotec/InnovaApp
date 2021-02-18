@@ -13,12 +13,19 @@ import {
 import home from './screens/home/home.vue';
 import login from './screens/login/login.vue';
 import lighthing from './screens/Lighting/MainLighting.vue'
-
+import louvers from './screens/Louvers/MainLouvers.vue'
+import screens from './screens/Screens/MainScreens';
+import climate from './screens/Climate/MainClimate';
+import weather from './screens/Weather/MainWeather';
 const StackNavigator = createStackNavigator(
   {
-  Home: home,
-  Login: login,
-  Lighthing: lighthing
+    Home: home,
+    Login: login,
+    Lighthing: lighthing,
+    Louvers: louvers,
+    Screens: screens,
+    Weather: weather,
+    Climate: climate
   },
   {
     initialRouteName: 'Login',
@@ -46,7 +53,7 @@ export default {
   }
   .container {
     flex: 1;
-    background-color: blue;
+    
     flex-direction: column;
   }
 </style>

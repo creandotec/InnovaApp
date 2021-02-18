@@ -1,5 +1,5 @@
 <template>
-    <view class="container">
+<view class="container">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
@@ -17,12 +17,9 @@
                 <view class="screen-title-container">
                     <ImageBackground  class="backgroundTitle" resizeMode="stretch"
                         :source="require('./../../assets/Innova/BG/barraizquierda.png')">
-                        
-                            <text class="screen-title">LIGHTHING</text>
-                        
-                        
+                            <text class="screen-title">SCREENS</text>
                         <Pressable :on-press='() => changeMenu(0)'>
-                            <image resizeMode="contain" style='margin-bottom:4%' 
+                            <image resizeMode="contain" style='margin-top:20%; flex:0.8'
                                 :source="require('./../../assets/Innova/Home/configblanco.png')"/>
                         </Pressable>
                         
@@ -33,10 +30,10 @@
                     <view class="master-container">
                         <view class="master-icon-container">
                             <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Home/lightoff.png')"/>
+                                :source="require('./../../assets/Innova/Screens/screensmasteroff.png')"/>
                         </view>
                         <view class="master-text-container">
-                            <text class="innova-master-text">LIGHTHING</text>
+                            <text class="innova-master-text">SCREENS</text>
                         </view>
                         
                     </view>
@@ -46,17 +43,25 @@
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/gutteroff.png')"/>
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
                         </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
                     </view>
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                            <image class="icon" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
+                        </Pressable>
+                    </view>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
+                        </Pressable>
+                    </view>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
                         </Pressable>
                     </view>
                 </view>
@@ -65,17 +70,25 @@
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/louverslightoff.png')"/>
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
                         </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
                     </view>
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                            <image class="icon" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
+                        </Pressable>
+                    </view>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
+                        </Pressable>
+                    </view>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
                         </Pressable>
                     </view>
                 </view>
@@ -84,57 +97,39 @@
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-xl" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/luzofflighingoff.png')"/>
+                                :source="require('./../../assets/Innova/Screens/screensmasteroff.png')"/>
                         </Pressable>
                     </view>
                     <view class="slider-container">
                         <image class="slider-icon" resizeMode="stretch"
                         :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
                     </view>
                 </view>
                 
-                <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/sconceoff.png')"/>
-                        </Pressable>
+                <view class="double-row-container">
+                    <view class="menu-button-container">
+                        <view style="flex:0.20;">
+                            <text class="menu-title-center">SUN TRACER</text>
+                        </view>
+                        <view class="icon-container">
+                            <Pressable :on-press='() => changeMenu(0)'>
+                                <image class="icon-xl-2" resizeMode="contain"
+                                    :source="require('./../../assets/Innova/Louvers/suntrackeroff.png')"/>
+                            </Pressable>
+                        </view>
                     </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
+                    <view class="menu-button-container" >
+                        <view style="flex:0.20;">
+                            <text class="menu-title-center">WEATHER</text>
+                        </view>
+                        <view class="icon-container">
+                            <Pressable :on-press='() => changeMenu(0)'>
+                                <image class="icon-xl" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Louvers/weatheroff.png')"/>
+                            </Pressable>
+                        </view>
                     </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
-                </view>
-                
-                <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/spareunooff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    
                 </view>
             </view>
         </ImageBackground>
@@ -163,7 +158,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+    .menu-title-center{
+        color: white;
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15;
+    }
+    .menu-button-container{
+        flex:1;
+        flex-direction: column;
+        
+    }
     .header{
         flex:1;
         flex-direction: row;
@@ -212,6 +219,11 @@ export default {
         flex-direction: row;
         justify-content: flex-start;
     }
+    .double-row-container{
+        flex:4;
+        flex-direction: row;
+        justify-content: center;
+    }
     .master-icon{
         flex:0.85;
         margin-top:8%;
@@ -223,9 +235,10 @@ export default {
         margin-bottom: 5%;
     }
     .icon-xl{
-        flex:1;
-        margin-top: 0%;
-        margin-bottom: 0%;
+        flex:0.9;
+    }
+    .icon-xl-2{
+        flex:2;
     }
     .screen-title{
         flex:1;
@@ -247,7 +260,7 @@ export default {
     }
     .icon-container {
         flex:1;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
