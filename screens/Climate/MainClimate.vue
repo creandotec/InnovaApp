@@ -88,8 +88,13 @@
                         </Pressable>
                     </view>
                     <view class="slider-container">
-                        <image style="flex:0.3;" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
+                        <view style="flex:0.3; flex-direction:row; justify-content:center; align-items:center;">
+                            <ImageBackground :source="require('./../../assets/Innova/Lighting/barracontexto.png')"
+                                style="flex:1; margin-right:5%;" resizeMode="stretch">
+                            <image style="flex:1; margin-right:5%;" resizeMode="stretch"
+                                :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
+                            </ImageBackground>
+                        </view>
                     </view>
                 </view>
                 

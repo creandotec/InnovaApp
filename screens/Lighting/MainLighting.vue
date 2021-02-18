@@ -20,7 +20,6 @@
                         
                             <text class="screen-title">LIGHTHING</text>
                         
-                        
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image resizeMode="contain" style='margin-bottom:4%' 
                                 :source="require('./../../assets/Innova/Home/configblanco.png')"/>
