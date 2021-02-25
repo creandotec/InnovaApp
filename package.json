@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/slider": "^3.0.3",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "css-loader": "^5.0.1",
@@ -16,11 +17,13 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-elements": "^3.2.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-paper": "^4.7.1",
     "react-native-reanimated": "^1.13.2",
     "react-native-screens": "^2.15.2",
     "react-native-web": "~0.13.12",
+    "styled-components": "^5.2.1",
     "vue-native-core": "^0.2.0",
     "vue-native-helper": "^0.2.0",
     "vue-native-router": "^0.2.0"
