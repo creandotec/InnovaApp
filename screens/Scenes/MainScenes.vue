@@ -1,94 +1,119 @@
 <template>
-<view class="container">
-    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+    <view class="container">
+        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
                 <Innova-Header/>
 
-                <Screen-Title screenTitle="ROOF LOUVERS"/>
+                <Screen-Title screenTitle="SCENES"/>
                 
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <!-- <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
-                        </view> -->
-                        <louver-switch master="'true'"/>
+                        <scene-switch master="'true"/>
+
                         <view class="master-text-container">
-                            <text class="innova-master-text">LOUVERS</text>
+                            <text class="innova-master-text">SCENES</text>
                         </view>
                         
                     </view>
                 </view>
 
                 <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch size="lg"/>
+                    
 
                     <Innova-Slider/>
+
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
                 </view>
                 
-                <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">SUN TRACER</text>
-                        </view>
-                        <sun-switch size="xl"/>
-                    </view>
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER</text>
-                        </view>
-                        <weather-switch size="md"/>
-                    </view>
+                <view class="default-row-container">
                     
+                    <Innova-Slider/>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
+                </view>
+                
+                <view class="default-row-container">
+                    
+
+                    <Innova-Slider/>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
+                </view>
+                
+                <view class="default-row-container">
+                    
+
+                    <Innova-Slider/>
+
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
+                </view>
+                
+                <view class="default-row-container">
+                    
+
+                    <Innova-Slider/>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
+                </view>
+
+                <view class="default-row-container">
+                    
+                    <view style="flex:3;">
+                        <text-input style="border-color:rgba(192, 192, 5, 0.76); border-width: 2; flex:1;"/>
+                    </view>
+                    <view class="icon-container">
+                        <Pressable :on-press='() => changeMenu(0)'>
+                            <image class="icon-sm" resizeMode="contain"
+                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
+                        </Pressable>
+                    </view>
                 </view>
             </view>
         </ImageBackground>
-    </GestureRecognizer>
+        </GestureRecognizer>
     </view>
 </template>
 
 <script>
-import Slider from "./../../components/Slider";
-import InnovaHeader from './../../components/InnovaHeader';
-import ScreenTitle from './../../components/ScreenTitle';
-import LouverSwitch from './../../components/Switches/LouverSwitch.vue';
-import WeatherSwitch from './../../components/Switches/WeatherSwitch.vue';
-import SunSwitch from './../../components/Switches/SunSwitch.vue';
+import Slider from "../../components/Slider";
+import InnovaHeader from "./../../components/InnovaHeader";
+import ScreenTitle from "./../../components/ScreenTitle";
+import SceneSwitch from '../../components/Switches/SceneSwitch.vue';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 export default {
     components:{
         "Innova-Slider":Slider,
-        InnovaHeader, GestureRecognizer, swipeDirections,
-        ScreenTitle,
-        'louver-switch':LouverSwitch,
-        WeatherSwitch,
-        SunSwitch
+        InnovaHeader,  GestureRecognizer, swipeDirections,
+        ScreenTitle, SceneSwitch
     },
     props:{
+     
         navigation:{
             type: Object
         }
@@ -103,10 +128,10 @@ export default {
             console.log(direction);
             //console.log(state);
             if(direction == "SWIPE_LEFT"){
-                this.navigation.navigate("Lighthing");
+                this.navigation.navigate("Climate");
             }
             else if(direction == "SWIPE_RIGHT"){
-                this.navigation.navigate("Zones");
+                this.navigation.navigate("Louvers");
             }
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
@@ -124,19 +149,7 @@ export default {
 }
 </script>
 
-<style>
-    .menu-title-center{
-        color: white;
-        margin-top: auto;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 15;
-    }
-    .menu-button-container{
-        flex:1;
-        flex-direction: column;
-        
-    }
+<style scoped>
     .header{
         flex:1;
         flex-direction: row;
@@ -181,14 +194,9 @@ export default {
         flex-direction: row;
     }
     .default-row-container{
-        flex:2;
+        flex:1.7;
         flex-direction: row;
         justify-content: flex-start;
-    }
-    .double-row-container{
-        flex:4;
-        flex-direction: row;
-        justify-content: center;
     }
     .master-icon{
         flex:0.85;
@@ -201,10 +209,9 @@ export default {
         margin-bottom: 5%;
     }
     .icon-xl{
-        flex:0.9;
-    }
-    .icon-xl-2{
-        flex:2;
+        flex:1;
+        margin-top: 0%;
+        margin-bottom: 0%;
     }
     .screen-title{
         flex:1;
@@ -226,7 +233,7 @@ export default {
     }
     .icon-container {
         flex:1;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
     }

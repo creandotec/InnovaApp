@@ -142,7 +142,9 @@ export default {
     },
     methods:{
         changeMenu: function(menu){
-            
+            if(menu == 1){
+                this.navigation.navigate("Zones");
+            }
             if(menu == 2){
                 this.navigation.navigate("Louvers");
             }
@@ -157,6 +159,9 @@ export default {
             }
             if(menu == 6){
                 this.navigation.navigate("Weather");
+            }
+            if(menu == 7){
+                this.navigation.navigate("Scenes");
             }
         }
     }

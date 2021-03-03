@@ -17,6 +17,9 @@ import louvers from './screens/Louvers/MainLouvers.vue'
 import screens from './screens/Screens/MainScreens';
 import climate from './screens/Climate/MainClimate';
 import weather from './screens/Weather/MainWeather';
+import zones from './screens/Zones/MainZones';
+import scenes from './screens/Scenes/MainScenes';
+
 const StackNavigator = createStackNavigator(
   {
     Home: home,
@@ -25,7 +28,9 @@ const StackNavigator = createStackNavigator(
     Louvers: louvers,
     Screens: screens,
     Weather: weather,
-    Climate: climate
+    Climate: climate,
+    Zones: zones,
+    Scenes:scenes
   },
   {
     initialRouteName: 'Login',

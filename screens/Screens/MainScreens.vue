@@ -1,37 +1,17 @@
 <template>
 <view class="container">
+    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <view class="header">
-                    <view :style="'flex:1'">
-                        <image class="home-button" :source="require('./../../assets/Innova/BG/botonhome.png')"
-                        resizeMode="cover" />
-                    </view>
-                    <view :style="'flex:1'">
-                        <image class="header-bar" :source="require('./../../assets/Innova/BG/banerhomesolo.png')"
-                            resizeMode="cover"/>
-                    </view>
-                </view>
-            
-                <view class="screen-title-container">
-                    <ImageBackground  class="backgroundTitle" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/BG/barraizquierda.png')">
-                            <text class="screen-title">SCREENS</text>
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image resizeMode="contain" style='margin-top:20%; flex:0.8'
-                                :source="require('./../../assets/Innova/Home/configblanco.png')"/>
-                        </Pressable>
-                        
-                    </ImageBackground>
-                </view>
+                
+                <Innova-Header/>
+
+                <Screen-Title screenTitle="SCREENS"/>
                 
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensmasteroff.png')"/>
-                        </view>
+                        <screen-switch-alt master="'true"/>
                         <view class="master-text-container">
                             <text class="innova-master-text">SCREENS</text>
                         </view>
@@ -40,70 +20,22 @@
                 </view>
 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <screen-switch/>
+                    <screen-switch/>
+                    <screen-switch/>
+                    <screen-switch/>
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Screens/screensdosoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <screen-switch/>
+                    <screen-switch/>
+                    <screen-switch/>
+                    <screen-switch/>
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-xl" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Screens/screensmasteroff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <screen-switch-alt size="lg"/>
+                    <Innova-Slider/>
                 </view>
                 
                 <view class="double-row-container">
@@ -111,33 +43,44 @@
                         <view style="flex:0.20;">
                             <text class="menu-title-center">SUN TRACER</text>
                         </view>
-                        <view class="icon-container">
-                            <Pressable :on-press='() => changeMenu(0)'>
-                                <image class="icon-xl-2" resizeMode="contain"
-                                    :source="require('./../../assets/Innova/Louvers/suntrackeroff.png')"/>
-                            </Pressable>
-                        </view>
+                        <SunSwitch size="xl"/>
                     </view>
                     <view class="menu-button-container" >
                         <view style="flex:0.20;">
                             <text class="menu-title-center">WEATHER</text>
                         </view>
-                        <view class="icon-container">
-                            <Pressable :on-press='() => changeMenu(0)'>
-                                <image class="icon-xl" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Louvers/weatheroff.png')"/>
-                            </Pressable>
-                        </view>
+                        <WeatherSwitch size="md"/>
                     </view>
                     
                 </view>
             </view>
         </ImageBackground>
+    </GestureRecognizer>
     </view>
 </template>
 
 <script>
+import Slider from "./../../components/Slider";
+import InnovaHeader from './../../components/InnovaHeader';
+import ScreenTitle from './../../components/ScreenTitle';
+import ScreenSwitch from './../../components/Switches/ScreenSwitch.vue'
+import ScreenSwitchAlt from '../../components/Switches/ScreenSwitchAlt.vue';
+
+import WeatherSwitch from './../../components/Switches/WeatherSwitch.vue';
+import SunSwitch from './../../components/Switches/SunSwitch.vue';
+
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 export default {
+    components:{
+        "Innova-Slider":Slider,
+        InnovaHeader, GestureRecognizer, swipeDirections,
+        ScreenTitle,
+        ScreenSwitch,
+        ScreenSwitchAlt,
+        SunSwitch,
+        WeatherSwitch
+    },
     props:{
         navigation:{
             type: Object
@@ -149,6 +92,22 @@ export default {
         }
     },
     methods:{
+        swipeHandler: function(direction, state){
+            console.log(direction);
+            //console.log(state);
+            if(direction == "SWIPE_LEFT"){
+                this.navigation.navigate("Weather");
+            }
+            else if(direction == "SWIPE_RIGHT"){
+                this.navigation.navigate("Climate");
+            }
+            else if(direction == "SWIPE_UP"){
+                this.navigation.navigate("Home");
+            }
+            else if(direction == null){
+                this.navigation.navigate("Home");
+            }
+        },
         changeMenu: function(menu){
             if(menu == 0){
                 this.navigation.navigate("Home");

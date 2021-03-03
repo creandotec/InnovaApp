@@ -5,88 +5,100 @@
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
                 <Innova-Header/>
-
-                <Screen-Title screenTitle="ROOF LOUVERS"/>
                 
+                <Screen-Title screenTitle="ZONES SELECTION"/>
+
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <!-- <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
-                        </view> -->
-                        <louver-switch master="'true'"/>
+                        <window-switch master="true"/>
+
                         <view class="master-text-container">
-                            <text class="innova-master-text">LOUVERS</text>
+                            <text class="innova-master-text">ZONES</text>
                         </view>
                         
                     </view>
                 </view>
 
-                <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch size="lg"/>
-
-                    <Innova-Slider/>
-                </view>
-                
                 <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">SUN TRACER</text>
-                        </view>
-                        <sun-switch size="xl"/>
+                    <view style="flex:3; flex-direction:column; justify-content:center; align-items:flex-end; margin-right:2%">
+                        <text class="innova-master-text">TIMER</text>
                     </view>
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER</text>
-                        </view>
-                        <weather-switch size="md"/>
+
+                    <view style="flex:1; flex-direction:column; justify-content:center; padding-right:5%;">
+                        
+                            <image style="flex:1;" resizeMode="contain"
+                                :source="require('./../../assets/Innova/Zones/clockofficon.png')"/>
+                        
                     </view>
                     
                 </view>
-            </view>
+
+                <view class="zone-control-container">
+                    <view style="flex:1; flex-direction:row;">
+                        <zone-switch-1/>
+                        <zone-switch-2/>
+                        <zone-switch-3/>
+                    </view>
+
+                    <view style="flex:1; flex-direction:row;">
+                        <zone-switch-4/>
+                        <zone-switch-5/>
+                        <zone-switch-6/>
+                    </view>
+
+                </view>
+                
         </ImageBackground>
-    </GestureRecognizer>
+        </GestureRecognizer>
     </view>
+    
 </template>
 
 <script>
-import Slider from "./../../components/Slider";
-import InnovaHeader from './../../components/InnovaHeader';
-import ScreenTitle from './../../components/ScreenTitle';
-import LouverSwitch from './../../components/Switches/LouverSwitch.vue';
-import WeatherSwitch from './../../components/Switches/WeatherSwitch.vue';
-import SunSwitch from './../../components/Switches/SunSwitch.vue';
+//import  Slider  from '@react-native-community/slider';
+import { Animated, PanResponder } from 'react-native';
+import  {PanGestureHandler} from 'react-native-gesture-handler';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import Slider from './../../components/Slider';
+import InnovaHeader from '../../components/InnovaHeader.vue';
+import ScreenTitle from '../../components/ScreenTitle';
+
+import ClimateSwitch from '../../components/Switches/ClimateSwitch.vue';
+import CilingfanSwitch from '../../components/Switches/CilingfanSwitch.vue';
+import MistSwitch from '../../components/Switches/MistSwitch.vue';
+import SpareAltSwitch from '../../components/Switches/SpareAltSwitch.vue';
+import AcSwitch from '../../components/Switches/AcSwitch.vue';
+
+import WindowSwitch from '../../components/Switches/WindowSwitch.vue';
+import ZoneSwitch1 from '../../components/Switches/Zones/ZoneSwitch1.vue';
+import ZoneSwitch2 from '../../components/Switches/Zones/ZoneSwitch2.vue';
+import ZoneSwitch3 from '../../components/Switches/Zones/ZoneSwitch3.vue';
+import ZoneSwitch4 from '../../components/Switches/Zones/ZoneSwitch4.vue';
+import ZoneSwitch5 from '../../components/Switches/Zones/ZoneSwitch5.vue';
+import ZoneSwitch6 from '../../components/Switches/Zones/ZoneSwitch6.vue';
+
+
 export default {
     components:{
+        Animated, PanGestureHandler, 
+        PanResponder, GestureRecognizer, swipeDirections,
         "Innova-Slider":Slider,
-        InnovaHeader, GestureRecognizer, swipeDirections,
+        InnovaHeader,
         ScreenTitle,
-        'louver-switch':LouverSwitch,
-        WeatherSwitch,
-        SunSwitch
+        ClimateSwitch,
+        CilingfanSwitch,
+        MistSwitch,
+        SpareAltSwitch,
+        AcSwitch,
+        WindowSwitch,
+        ZoneSwitch1,
+        ZoneSwitch2,
+        ZoneSwitch3,
+        ZoneSwitch4,
+        ZoneSwitch5,
+        ZoneSwitch6,
     },
     props:{
         navigation:{
@@ -95,7 +107,7 @@ export default {
     },
     data: function(){
         return{
-
+            temperature: 0.0,
         }
     },
     methods:{
@@ -103,17 +115,17 @@ export default {
             console.log(direction);
             //console.log(state);
             if(direction == "SWIPE_LEFT"){
-                this.navigation.navigate("Lighthing");
-            }
-            else if(direction == "SWIPE_RIGHT"){
-                this.navigation.navigate("Zones");
+                this.navigation.navigate("Louvers");
             }
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
             }
-            else if(direction == null){
-                this.navigation.navigate("Home");
-            }
+        },
+        IncreaseTemp: function(){
+            this.temperature += 0.5;
+        },
+        DecreaseTemp: function(){
+            this.temperature -= 0.5;
         },
         changeMenu: function(menu){
             if(menu == 0){
@@ -125,6 +137,22 @@ export default {
 </script>
 
 <style>
+    .zone-control-container{
+        flex: 7.5;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-right: 2%;
+        padding-left: 2%;
+        padding-top: 18%;
+        padding-bottom: 18%;
+    }
+    .menu-button-container-border{
+        flex:1;
+        flex-direction: column;
+        border-color: rgba(255, 255, 0, 0.76);
+        border-width: 2;
+    }
     .menu-title-center{
         color: white;
         margin-top: auto;
@@ -136,10 +164,6 @@ export default {
         flex:1;
         flex-direction: column;
         
-    }
-    .header{
-        flex:1;
-        flex-direction: row;
     }
     .master-container{
         flex:1;
@@ -172,10 +196,6 @@ export default {
     .header-bar{
         flex:2;
     }
-    .screen-title-container{
-        flex:1;
-        flex-direction: row;
-    }
     .main-switch-container{
         flex:3.5;
         flex-direction: row;
@@ -186,7 +206,7 @@ export default {
         justify-content: flex-start;
     }
     .double-row-container{
-        flex:4;
+        flex:2.5;
         flex-direction: row;
         justify-content: center;
     }
@@ -205,14 +225,6 @@ export default {
     }
     .icon-xl-2{
         flex:2;
-    }
-    .screen-title{
-        flex:1;
-        font-weight: bold;
-        font-size: 15;
-        color: whitesmoke;
-        margin-top:2%;
-        margin-bottom: 2%;
     }
     .header-container{
         flex:1;
@@ -233,19 +245,6 @@ export default {
     .icon-sm{
         flex:0.5;
     }
-    .slider-container{
-        flex: 4;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .slider-icon{
-        flex:1;
-        margin-top:10%;
-        margin-bottom: 10%;
-        margin-left:5%;
-        margin-right: 0%;
-    }
     .innova-layout {
         flex:1;
         flex-direction: column;
@@ -255,11 +254,6 @@ export default {
     .backgroundImage {
         flex:1;
         justify-content: center;
-    }
-    .backgroundTitle {
-        flex:1;
-        flex-direction: row;
-        justify-content: space-between;
     }
     .container {
         flex: 1;

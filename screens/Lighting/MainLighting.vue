@@ -1,39 +1,17 @@
 <template>
     <view class="container">
+        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <view class="header">
-                    <view :style="'flex:1'">
-                        <image class="home-button" :source="require('./../../assets/Innova/BG/botonhome.png')"
-                        resizeMode="cover" />
-                    </view>
-                    <view :style="'flex:1'">
-                        <image class="header-bar" :source="require('./../../assets/Innova/BG/banerhomesolo.png')"
-                            resizeMode="cover"/>
-                    </view>
-                </view>
-            
-                <view class="screen-title-container">
-                    <ImageBackground  class="backgroundTitle" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/BG/barraizquierda.png')">
-                        
-                            <text class="screen-title">LIGHTHING</text>
-                        
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image resizeMode="contain" style='margin-bottom:4%' 
-                                :source="require('./../../assets/Innova/Home/configblanco.png')"/>
-                        </Pressable>
-                        
-                    </ImageBackground>
-                </view>
+                <Innova-Header/>
+
+                <Screen-Title screenTitle="LIGHTHING"/>
                 
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Home/lightoff.png')"/>
-                        </view>
+                        <light-switch master="'true"/>
+
                         <view class="master-text-container">
                             <text class="innova-master-text">LIGHTHING</text>
                         </view>
@@ -42,16 +20,10 @@
                 </view>
 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/gutteroff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <gutter-switch/>
+
+                    <Innova-Slider/>
+
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-sm" resizeMode="contain"
@@ -61,16 +33,8 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/louverslightoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <louver-light-switch/>
+                    <Innova-Slider/>
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-sm" resizeMode="contain"
@@ -80,16 +44,9 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-xl" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/luzofflighingoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <ceilling-switch/>
+
+                    <Innova-Slider/>
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-sm" resizeMode="contain"
@@ -99,16 +56,10 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/sconceoff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <sconce-switch size="md"/>
+
+                    <Innova-Slider/>
+
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-sm" resizeMode="contain"
@@ -118,16 +69,9 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon" resizeMode="contain" 
-                                :source="require('./../../assets/Innova/Lighting/spareunooff.png')"/>
-                        </Pressable>
-                    </view>
-                    <view class="slider-container">
-                        <image class="slider-icon" resizeMode="stretch"
-                        :source="require('./../../assets/Innova/Lighting/barracontexto.png')"/>
-                    </view>
+                    <spare-switch/>
+
+                    <Innova-Slider/>
                     <view class="icon-container">
                         <Pressable :on-press='() => changeMenu(0)'>
                             <image class="icon-sm" resizeMode="contain"
@@ -137,12 +81,37 @@
                 </view>
             </view>
         </ImageBackground>
+        </GestureRecognizer>
     </view>
 </template>
 
 <script>
+import Slider from "../../components/Slider";
+import CeillingSwitch from '../../components/Switches/CeillingSwitch.vue';
+import GutterSwitch from '../../components/Switches/GutterSwitch.vue';
+import LightSwitch from '../../components/Switches/LightSwitch.vue';
+import LouverLightSwitch from '../../components/Switches/LouverLightSwitch.vue';
+import SconceSwitch from '../../components/Switches/SconceSwitch.vue';
+import SpareSwitch from '../../components/Switches/SpareSwitch.vue';
+import InnovaHeader from "./../../components/InnovaHeader";
+import ScreenTitle from "./../../components/ScreenTitle";
+
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 export default {
+    components:{
+        "Innova-Slider":Slider,
+        InnovaHeader,  GestureRecognizer, swipeDirections,
+        ScreenTitle,
+        LightSwitch,
+        SconceSwitch,
+        GutterSwitch,
+        LouverLightSwitch,
+        CeillingSwitch,
+        SpareSwitch,
+    },
     props:{
+     
         navigation:{
             type: Object
         }
@@ -153,6 +122,22 @@ export default {
         }
     },
     methods:{
+        swipeHandler: function(direction, state){
+            console.log(direction);
+            //console.log(state);
+            if(direction == "SWIPE_LEFT"){
+                this.navigation.navigate("Climate");
+            }
+            else if(direction == "SWIPE_RIGHT"){
+                this.navigation.navigate("Louvers");
+            }
+            else if(direction == "SWIPE_UP"){
+                this.navigation.navigate("Home");
+            }
+            else if(direction == null){
+                this.navigation.navigate("Home");
+            }
+        },
         changeMenu: function(menu){
             if(menu == 0){
                 this.navigation.navigate("Home");

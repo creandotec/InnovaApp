@@ -1,14 +1,30 @@
 <template>
     <view class="container">
-        <ImageBackground :source="require('./../../assets/Innova/BG/homepage.png')"
+        <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
         class="backgroundImage" resizeMode="stretch">
-            <button title="Go to home screen" @press="goToHomeScreen"></button>
+            <view class="innova-layout">
+                <InnovaHeader/>
+                <view class="login-container">
+                    <view style="flex:0.5; flex-direction:column; justify-content:center; align-items:center;">
+                        <Pressable :on-press='() => goToHomeScreen()'>
+                            <image class="home-button"
+                                :source="require('./../../assets/Innova/Login/innovamain.png')"
+                                resizeMode="center"/>
+                        </Pressable>
+                    </view>
+                </view>
+                
+            </view>
         </ImageBackground>
     </view>
 </template>
 
 <script>
+import InnovaHeader from '../../components/InnovaHeader.vue';
 export default {
+    components:{
+        InnovaHeader,
+    },
     props:{
         navigation:{
             type: Object
@@ -28,6 +44,15 @@ export default {
 </script>
 
 <style>
+    .home-button{
+        flex:1;
+    }
+    .innova-layout {
+        flex:1;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-end;
+    }
     .backgroundImage {
         flex:1;
         justify-content: center;
@@ -37,8 +62,10 @@ export default {
         flex-direction: column;
         justify-content: center;
     }
-    .center {
-        margin-left: auto;
-        margin-right: auto;
+    .login-container {
+        flex:10.5;
+        flex-direction:column;
+        justify-content:center;
+        align-items: center;
     }
 </style>
