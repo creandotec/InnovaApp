@@ -20,77 +20,27 @@
                 </view>
 
                 <view class="default-row-container">
-                    
-
-                    <Innova-Slider/>
-
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
                 
                 <view class="default-row-container">
-                    
-                    <Innova-Slider/>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
                 
                 <view class="default-row-container">
-                    
-
-                    <Innova-Slider/>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
                 
                 <view class="default-row-container">
-                    
-
-                    <Innova-Slider/>
-
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
                 
                 <view class="default-row-container">
-                    
-
-                    <Innova-Slider/>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
 
                 <view class="default-row-container">
-                    
-                    <view style="flex:3;">
-                        <text-input style="border-color:rgba(192, 192, 5, 0.76); border-width: 2; flex:1;"/>
-                    </view>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <scene-config SceneNumber="1"/>
                 </view>
             </view>
         </ImageBackground>
@@ -103,12 +53,13 @@ import Slider from "../../components/Slider";
 import InnovaHeader from "./../../components/InnovaHeader";
 import ScreenTitle from "./../../components/ScreenTitle";
 import SceneSwitch from '../../components/Switches/SceneSwitch.vue';
+import SceneConfig from '../../components/SceneConfig.vue'
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 export default {
     components:{
-        "Innova-Slider":Slider,
+        "Innova-Slider":Slider, SceneConfig,
         InnovaHeader,  GestureRecognizer, swipeDirections,
         ScreenTitle, SceneSwitch
     },
