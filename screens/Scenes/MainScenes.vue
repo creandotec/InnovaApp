@@ -24,23 +24,23 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
+                    <scene-config SceneNumber="2"/>
                 </view>
                 
                 <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
+                    <scene-config SceneNumber="3"/>
                 </view>
                 
                 <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
+                    <scene-config SceneNumber="4"/>
                 </view>
                 
                 <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
+                    <scene-config SceneNumber="5"/>
                 </view>
 
                 <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
+                    <scene-config SceneNumber="6"/>
                 </view>
             </view>
         </ImageBackground>

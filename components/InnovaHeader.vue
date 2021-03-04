@@ -38,8 +38,8 @@ export default {
     }
     .home-button{
         flex: 1;
-        justify-content: center;
-        align-items: stretch;
+        width: 160;
+        height:100;
     }
     .header-bar{
         flex:2;

@@ -7,7 +7,8 @@
         </view>
 
         <view style="flex:4; flex-direction:row; justify-content:center; align-items:flex-end;">
-            <text-input style="flex:1; color:white; height:50%; border-bottom-color:rgba(192, 192, 5, 0.76); border-bottom-width: 2;">
+            <text-input :value="sceneName" text-align="center" :on-change-text="(text)=>setSceneName(text)"
+                style="flex:1; color:white; height:100%; border-bottom-color:rgba(192, 192, 5, 0.76); border-bottom-width: 2;">
 
             </text-input>
         </view>
@@ -30,17 +31,34 @@ export default {
     },
     data: function(){
         return{
-
+            sceneName: "Name"
         }
     },
     methods:{
-
+        setSceneName: function(text){
+            this.sceneName = text;
+        }
     },
     computed:{
         sceneSwitchSource: function () {
             let $vm = this;
             if($vm.SceneNumber == "1"){
-                return require('../assets/Innova/Scenes/scenesunoizq.png');
+                return require('../assets/Innova/Scenes/callunooff.png');
+            }
+            else if($vm.SceneNumber == "2"){
+                return require('../assets/Innova/Scenes/calldosoff.png');
+            }
+            else if($vm.SceneNumber == "3"){
+                return require('../assets/Innova/Scenes/calltresoff.png');
+            }
+            else if($vm.SceneNumber == "4"){
+                return require('../assets/Innova/Scenes/callcuatrooff.png');
+            }
+            else if($vm.SceneNumber == "5"){
+                return require('../assets/Innova/Scenes/callcincooff.png');
+            }
+            else if($vm.SceneNumber == "6"){
+                return require('../assets/Innova/Scenes/callseisoff.png');
             }
             else{
                 return require('../assets/Innova/Scenes/scenesunoizq.png')
@@ -50,6 +68,21 @@ export default {
             let $vm = this;
             if($vm.SceneNumber == "1"){
                 return require('../assets/Innova/Scenes/saveunooff.png')
+            }
+            else if($vm.SceneNumber == "2"){
+                return require('../assets/Innova/Scenes/savedosoff.png');
+            }
+            else if($vm.SceneNumber == "3"){
+                return require('../assets/Innova/Scenes/savetresoff.png');
+            }
+            else if($vm.SceneNumber == "4"){
+                return require('../assets/Innova/Scenes/savecuatrooff.png');
+            }
+            else if($vm.SceneNumber == "5"){
+                return require('../assets/Innova/Scenes/savecincooff.png');
+            }
+            else if($vm.SceneNumber == "6"){
+                return require('../assets/Innova/Scenes/saveseisoff.png');
             }
             else{
                 return require('../assets/Innova/Scenes/saveunooff.png')

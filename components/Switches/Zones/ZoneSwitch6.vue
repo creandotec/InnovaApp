@@ -3,7 +3,7 @@
         <Pressable :on-press='() => switchToggle()' :on-long-press='() => turnoffZone()'>
             <image v-bind:class="{'icon':size=='md' && !master, 'icon-sm':size=='sm' && !master, 
                 'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&master, 'master-icon':master}" 
-                resizeMode="center"
+                resizeMode="contain"
                 :source="imageSource"/>
         </Pressable>
     </view>
@@ -78,7 +78,8 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+        width: 100;
+        height:100;
     }
     .icon-container {
         flex:1;
@@ -87,8 +88,8 @@ export default {
         align-items: center;
         border-color: rgba(255, 255, 0, 0.76);
         border-width: 2;
-        padding-top: 0%;
-        padding-bottom: 0%;
+        padding-top: 2%;
+        padding-bottom: 2%;
         padding-left: 0%;
         padding-right: 0%;
     }
