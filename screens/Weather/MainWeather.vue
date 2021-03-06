@@ -97,9 +97,6 @@ export default {
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
             }
-            else if(direction == null){
-                this.navigation.navigate("Home");
-            }
         },
         changeMenu: function(menu){
             if(menu == 0){

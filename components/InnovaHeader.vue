@@ -25,7 +25,7 @@ export default {
     },
     methods:{
         goHome: function(){
-            this.$parent.navigation.navigate("Home");
+            this.$parent.navigation.navigate("Login");
         }
     }
 }

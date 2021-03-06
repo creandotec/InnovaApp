@@ -36,7 +36,7 @@
                     <louver-light-switch/>
                     <Innova-Slider/>
                     <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
+                        <Pressable :on-press='() => changeMenu(1)'>
                             <image class="icon-sm" resizeMode="contain"
                             :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
                         </Pressable>
@@ -48,7 +48,7 @@
 
                     <Innova-Slider/>
                     <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
+                        <Pressable :on-press='() => changeMenu(2)'>
                             <image class="icon-sm" resizeMode="contain"
                             :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
                         </Pressable>
@@ -60,24 +60,15 @@
 
                     <Innova-Slider/>
 
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    <view style="width:16%"></view>
                 </view>
                 
                 <view class="default-row-container">
                     <spare-switch/>
 
                     <Innova-Slider/>
-                    <view class="icon-container">
-                        <Pressable :on-press='() => changeMenu(0)'>
-                            <image class="icon-sm" resizeMode="contain"
-                            :source="require('./../../assets/Innova/Lighting/paletteoff.png')"/>
-                        </Pressable>
-                    </view>
+                    
+                    <view style="width:16%"></view>
                 </view>
             </view>
         </ImageBackground>
@@ -134,13 +125,16 @@ export default {
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
             }
-            else if(direction == null){
-                this.navigation.navigate("Home");
-            }
         },
         changeMenu: function(menu){
             if(menu == 0){
-                this.navigation.navigate("Home");
+                this.navigation.navigate("RGB1");
+            }
+            else if(menu == 1){
+                this.navigation.navigate("RGB2");
+            }
+            else if(menu == 2){
+                this.navigation.navigate("RGB3");
             }
         }
     }

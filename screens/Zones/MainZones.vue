@@ -24,11 +24,11 @@
                         <text class="innova-master-text">TIMER</text>
                     </view>
 
-                    <view style="flex:1; flex-direction:column; justify-content:center; padding-right:5%;">
-                        
+                    <view style="flex:1; flex-direction:column; justify-content:center; align-items:center; padding-right:5%;">
+                        <Pressable :on-press="() => enterTimerConfig()">
                             <image style="flex:1;" resizeMode="contain"
                                 :source="require('./../../assets/Innova/Zones/clockofficon.png')"/>
-                        
+                        </Pressable>
                     </view>
                     
                 </view>
@@ -111,6 +111,9 @@ export default {
         }
     },
     methods:{
+        enterTimerConfig: function(){
+            this.navigation.navigate("Timer");
+        },
         swipeHandler: function(direction, state){
             console.log(direction);
             //console.log(state);
@@ -138,14 +141,14 @@ export default {
 
 <style>
     .zone-control-container{
-        flex: 7.5;
+        flex: 6;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding-right: 2%;
         padding-left: 2%;
-        padding-top: 18%;
-        padding-bottom: 18%;
+        padding-top: 10%;
+        padding-bottom: 15%;
     }
     .menu-button-container-border{
         flex:1;
@@ -173,7 +176,7 @@ export default {
         align-content: center;
     }
     .master-icon-container{
-        flex:0.8;
+        flex:1;
         /* background-color: ghostwhite; */
         flex-direction: column;
         justify-content: center;
@@ -197,16 +200,16 @@ export default {
         flex:2;
     }
     .main-switch-container{
-        flex:3.5;
+        flex:4;
         flex-direction: row;
     }
     .default-row-container{
-        flex:2;
+        flex:3;
         flex-direction: row;
         justify-content: flex-start;
     }
     .double-row-container{
-        flex:2.5;
+        flex:4;
         flex-direction: row;
         justify-content: center;
     }

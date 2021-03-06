@@ -134,9 +134,6 @@ export default {
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
             }
-            else if(direction == null){
-                this.navigation.navigate("Home");
-            }
         },
         IncreaseTemp: function(){
             this.temperature += 0.5;

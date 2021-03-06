@@ -19,6 +19,10 @@ import climate from './screens/Climate/MainClimate';
 import weather from './screens/Weather/MainWeather';
 import zones from './screens/Zones/MainZones';
 import scenes from './screens/Scenes/MainScenes';
+import timer from './screens/Timers/MainTimer';
+import rgb1 from './screens/Lighting/RGBLighting1';
+import rgb2 from './screens/Lighting/RGBLighting2';
+import rgb3 from './screens/Lighting/RGBLighting3';
 
 const StackNavigator = createStackNavigator(
   {
@@ -30,7 +34,11 @@ const StackNavigator = createStackNavigator(
     Weather: weather,
     Climate: climate,
     Zones: zones,
-    Scenes:scenes
+    Scenes:scenes,
+    Timer: timer,
+    RGB1: rgb1,
+    RGB2: rgb2,
+    RGB3: rgb3,
   },
   {
     initialRouteName: 'Login',

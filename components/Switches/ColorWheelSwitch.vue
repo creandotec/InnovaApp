@@ -29,7 +29,7 @@ export default {
     methods:{
         switchToggle: function(){
             this.initialState = !this.initialState;
-            console.log(this.initialState);
+            
         }
     },
     computed:{
@@ -37,10 +37,10 @@ export default {
             let $vm = this;
             
             if($vm.initialState == true){
-                return require("../../assets/Innova/Zones/zoneson.png");
+                return require("../../assets/Innova/Lighting/rueda.png");
             }
             else{
-                return require("../../assets/Innova/Zones/zonesoff.png");
+                return require("../../assets/Innova/Lighting/rueda.png");
             }
         }
     }
@@ -49,14 +49,16 @@ export default {
 
 <style scoped>
     .master-icon-container{
-        flex:1;
+        flex:0.7;
         /* background-color: ghostwhite; */
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding-left: 10%;
     }
     .master-icon{
-        flex:1;
+        flex:0.9;
+        
         margin-top:0%;
         margin-bottom: 0%;
         margin-left: 2%;

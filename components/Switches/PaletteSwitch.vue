@@ -37,10 +37,10 @@ export default {
             let $vm = this;
             
             if($vm.initialState == true){
-                return require("../../assets/Innova/Zones/zoneson.png");
+                return require("../../assets/Innova/Lighting/paletteon.png");
             }
             else{
-                return require("../../assets/Innova/Zones/zonesoff.png");
+                return require("../../assets/Innova/Lighting/paletteoff.png");
             }
         }
     }
@@ -49,21 +49,19 @@ export default {
 
 <style scoped>
     .master-icon-container{
-        flex:1;
+        flex:0.8;
         /* background-color: ghostwhite; */
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
     .master-icon{
-        flex:1;
+        flex:0.9;
         margin-top:0%;
         margin-bottom: 0%;
-        margin-left: 2%;
-        margin-right: 2%;
     }
     .icon{
-        flex:0.89;
+        flex:0.9;
         margin-top: 5%;
         margin-bottom: 5%;
     }

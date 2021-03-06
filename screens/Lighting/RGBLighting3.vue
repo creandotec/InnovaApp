@@ -1,94 +1,85 @@
 <template>
-<view class="container">
-    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+    <view class="container">
+        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
                 <Innova-Header/>
 
-                <Screen-Title screenTitle="ROOF LOUVERS"/>
+                <Screen-Title screenTitle="RGB-3"/>
                 
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <!-- <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
-                        </view> -->
-                        <louver-switch master="'true'"/>
+                        <color-wheel-switch master="'true"/>
+
                         <view class="master-text-container">
-                            <text class="innova-master-text">LOUVERS</text>
+                            <text class="innova-master-text">RGB</text>
+                            <palette-switch size="sm"/>
                         </view>
                         
                     </view>
                 </view>
 
                 <view class="default-row-container">
-                    <louver-switch/>
+                    <red-switch/>
 
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
+                    <Innova-Slider-Red/>
                 </view>
                 
                 <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch size="lg"/>
-
-                    <Innova-Slider/>
-                </view>
-                
-                <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">SUN TRACER</text>
-                        </view>
-                        <sun-switch size="xl"/>
-                    </view>
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER</text>
-                        </view>
-                        <weather-switch size="md"/>
-                    </view>
+                    <green-switch/>
+                    <Innova-Slider-Green/>
                     
                 </view>
+                
+                <view class="default-row-container">
+                    <blue-switch/>
+
+                    <Innova-Slider-Blue/>
+
+                </view>
+                
             </view>
         </ImageBackground>
-    </GestureRecognizer>
+        </GestureRecognizer>
     </view>
 </template>
 
 <script>
-import Slider from "./../../components/Slider";
-import InnovaHeader from './../../components/InnovaHeader';
-import ScreenTitle from './../../components/ScreenTitle';
-import LouverSwitch from './../../components/Switches/LouverSwitch.vue';
-import WeatherSwitch from './../../components/Switches/WeatherSwitch.vue';
-import SunSwitch from './../../components/Switches/SunSwitch.vue';
+import Slider from "../../components/Slider";
+import SliderRed from "../../components/SliderRed";
+import SliderGreen from "../../components/SliderGreen";
+import SliderBlue from "../../components/SliderBlue";
+
+import ColorWheelSwitch from '../../components/Switches/ColorWheelSwitch.vue';
+
+
+import RedSwitch from '../../components/Switches/RedSwitch.vue';
+import GreenSwitch from '../../components/Switches/GreenSwitch.vue';
+import BlueSwitch from '../../components/Switches/BlueSwitch.vue';
+import PaletteSwitch from '../../components/Switches/PaletteSwitch.vue';
+
+import InnovaHeader from "./../../components/InnovaHeader";
+import ScreenTitle from "./../../components/ScreenTitle";
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 export default {
     components:{
         "Innova-Slider":Slider,
-        InnovaHeader, GestureRecognizer, swipeDirections,
+        "Innova-Slider-Red":SliderRed,
+        "Innova-Slider-Green": SliderGreen,
+        "Innova-Slider-Blue": SliderBlue,
+        InnovaHeader,  GestureRecognizer, swipeDirections,
         ScreenTitle,
-        'louver-switch':LouverSwitch,
-        WeatherSwitch,
-        SunSwitch
+        ColorWheelSwitch,
+        RedSwitch,
+        GreenSwitch,
+        BlueSwitch,
+        PaletteSwitch
     },
     props:{
+     
         navigation:{
             type: Object
         }
@@ -106,7 +97,7 @@ export default {
                 this.navigation.navigate("Lighthing");
             }
             else if(direction == "SWIPE_RIGHT"){
-                this.navigation.navigate("Zones");
+                this.navigation.navigate("Lighthing");
             }
             else if(direction == "SWIPE_UP"){
                 this.navigation.navigate("Home");
@@ -121,19 +112,7 @@ export default {
 }
 </script>
 
-<style>
-    .menu-title-center{
-        color: white;
-        margin-top: auto;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 15;
-    }
-    .menu-button-container{
-        flex:1;
-        flex-direction: column;
-        
-    }
+<style scoped>
     .header{
         flex:1;
         flex-direction: row;
@@ -162,6 +141,7 @@ export default {
         color: ghostwhite;
         font-size: 25;
         font-weight: bold;
+        margin-top: 100;
     }
     .home-button{
         flex: 1;
@@ -174,18 +154,13 @@ export default {
         flex-direction: row;
     }
     .main-switch-container{
-        flex:3.5;
+        flex:5;
         flex-direction: row;
     }
     .default-row-container{
         flex:2;
         flex-direction: row;
         justify-content: flex-start;
-    }
-    .double-row-container{
-        flex:4;
-        flex-direction: row;
-        justify-content: center;
     }
     .master-icon{
         flex:0.85;
@@ -198,10 +173,9 @@ export default {
         margin-bottom: 5%;
     }
     .icon-xl{
-        flex:0.9;
-    }
-    .icon-xl-2{
-        flex:2;
+        flex:1;
+        margin-top: 0%;
+        margin-bottom: 0%;
     }
     .screen-title{
         flex:1;
@@ -223,7 +197,7 @@ export default {
     }
     .icon-container {
         flex:1;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
     }

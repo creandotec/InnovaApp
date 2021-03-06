@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 export const ThumbCursor = styled.Image`
     position:relative;
-    flex:0.65;    
+    flex:0.9;    
     left: ${props => props.position || 0}%;
     width:7%;
 `;
