@@ -10,7 +10,13 @@
 </template>
 
 <script>
+
+import {ZoneSwitch} from './zoneSwitch.js';
+
 export default {
+    components:{
+        ZoneSwitch
+    },
     data: function(){
         return{
             initialState: 0,
