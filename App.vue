@@ -1,6 +1,6 @@
 <template>
-      <app-navigator>
-      </app-navigator>
+    <app-navigator>
+    </app-navigator>
 </template>
 
 <script>

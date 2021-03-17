@@ -1,5 +1,6 @@
 <template>
     <view class="container">
+        <StatusBar/>
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
         class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">

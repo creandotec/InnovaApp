@@ -1,46 +1,51 @@
 <template>
     <view class="container">
+        <StatusBar/>
         <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <Innova-Header/>
 
-                <Screen-Title screenTitle="TIMER SELECTION"/>
+                <view style="flex:1.5; flex-direction:column"> 
+                    <Innova-Header/>
+                    <Screen-Title screenTitle="TIMER SELECTION"/>
+                </view>
                 
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <clock-switch master="'true"/>
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <clock-switch master="'true"/>
 
-                        <view class="master-text-container">
-                            <text class="innova-master-text">TIMER</text>
+                            <view class="master-text-container">
+                                <text class="innova-master-text">TIMER</text>
+                            </view>
+                            
                         </view>
-                        
                     </view>
-                </view>
 
-                <view class="default-row-container">
-                    <timer-config TimerNumber="1"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <timer-config TimerNumber="2"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <timer-config TimerNumber="3"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <timer-config TimerNumber="4"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <timer-config TimerNumber="5"/>
-                </view>
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="1"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="2"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="3"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="4"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="5"/>
+                    </view>
 
-                <view class="default-row-container">
-                    <timer-config TimerNumber="6"/>
+                    <view class="default-row-container">
+                        <timer-config TimerNumber="6"/>
+                    </view>
                 </view>
             </view>
         </ImageBackground>

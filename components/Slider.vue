@@ -1,6 +1,6 @@
 <template>
     <view class="slider-container" :on-layout="(event)=>getSlideWidth(event)">
-        <ImageBackground :source="require('./../assets/Innova/Lighting/barracontexto.png')" 
+        <ImageBackground :source="require('./../assets/Innova/Lighting/Barra.png')" 
             class="slider-background" resizeMode="stretch">
             <!-- <image class="slider-thumb" resizeMode="stretch"
                 :on-start-should-set-pan-responder="()=>{return true}"
@@ -13,7 +13,7 @@
                 :on-handler-state-change="(evt) => adjustThumb(evt)"
                 :on-gesture-event="(evt) => moveCursor(evt)">
                 <thumb-cursor :position="barraValue" resizeMode="stretch"
-                    :source="require('./../assets/Innova/Multi/cursor2.png')"/>
+                    :source="require('./../assets/Innova/Multi/Cursor.png')"/>
             </PanGestureHandler>
         </ImageBackground>
     </view>
@@ -123,7 +123,7 @@ export default {
         left: 10%;
     }
     .slider-background{
-        flex: 0.3;
+        flex: 0.40;
         width: 90%;
         flex-direction: column;
         justify-content: flex-end;

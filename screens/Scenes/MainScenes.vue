@@ -1,46 +1,51 @@
 <template>
     <view class="container">
+        <StatusBar/>
         <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <Innova-Header/>
 
-                <Screen-Title screenTitle="SCENES"/>
-                
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <scene-switch master="'true"/>
+                <view style="flex:1.5; flex-direction:column">
+                    <Innova-Header/>
+                    <Screen-Title screenTitle="SCENES"/>
+                </view>
 
-                        <view class="master-text-container">
-                            <text class="innova-master-text">SCENES</text>
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <scene-switch master="'true"/>
+
+                            <view class="master-text-container">
+                                <text class="innova-master-text">SCENES</text>
+                            </view>
+                            
                         </view>
-                        
                     </view>
-                </view>
 
-                <view class="default-row-container">
-                    <scene-config SceneNumber="1"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <scene-config SceneNumber="2"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <scene-config SceneNumber="3"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <scene-config SceneNumber="4"/>
-                </view>
-                
-                <view class="default-row-container">
-                    <scene-config SceneNumber="5"/>
-                </view>
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="1"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="2"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="3"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="4"/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="5"/>
+                    </view>
 
-                <view class="default-row-container">
-                    <scene-config SceneNumber="6"/>
+                    <view class="default-row-container">
+                        <scene-config SceneNumber="6"/>
+                    </view>
                 </view>
             </view>
         </ImageBackground>

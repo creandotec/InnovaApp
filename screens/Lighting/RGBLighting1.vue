@@ -1,42 +1,46 @@
 <template>
     <view class="container">
+        <StatusBar/>
         <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <Innova-Header/>
-
-                <Screen-Title screenTitle="RGB-1"/>
+                <view style="flex:1.5; flex-direction:column">
+                    <Innova-Header/>
+                    <Screen-Title screenTitle="RGB-1"/>
+                </view>
                 
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <color-wheel-switch master="'true"/>
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <color-wheel-switch master="'true"/>
 
-                        <view class="master-text-container">
-                            <text class="innova-master-text">RGB</text>
-                            <palette-switch size="sm"/>
+                            <view class="master-text-container">
+                                <text class="innova-master-text">RGB</text>
+                                <palette-switch size="sm"/>
+                            </view>
+                            
                         </view>
+                    </view>
+
+                    <view class="default-row-container">
+                        <red-switch/>
+
+                        <Innova-Slider-Red/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <green-switch/>
+                        <Innova-Slider-Green/>
                         
                     </view>
-                </view>
-
-                <view class="default-row-container">
-                    <red-switch/>
-
-                    <Innova-Slider-Red/>
-                </view>
-                
-                <view class="default-row-container">
-                    <green-switch/>
-                    <Innova-Slider-Green/>
                     
-                </view>
-                
-                <view class="default-row-container">
-                    <blue-switch/>
+                    <view class="default-row-container">
+                        <blue-switch/>
 
-                    <Innova-Slider-Blue/>
+                        <Innova-Slider-Blue/>
 
+                    </view>
                 </view>
                 
             </view>

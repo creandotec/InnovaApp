@@ -1,55 +1,66 @@
 <template>
-<view class="container">
-    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
-        <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
-            class="backgroundImage" resizeMode="stretch">
-            <view class="innova-layout">
-                <Innova-Header/>
+    <view class="container">
+    
+    <StatusBar/>
 
-                <Screen-Title screenTitle="WEATHER SETTINGS"/>
-                
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <WeatherSwitch master="true"/>
+    <SafeAreaView style="flex:1">
+        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+            <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
+                class="backgroundImage" resizeMode="stretch">
+                <view class="innova-layout">
 
-                        <view class="master-text-container">
-                            <text class="innova-master-text">WEATHER</text>
+                    <view style="flex:1; flex-direction:column">
+                        <Innova-Header/>
+                        <Screen-Title screenTitle="WEATHER SETTINGS"/>
+                    <view/>
+                    
+                    <view style="flex:11; flex-direction:column">
+                        <view class="main-switch-container">
+                            <view class="master-container">
+                                <WeatherSwitch master="true"/>
+
+                                <view class="master-text-container">
+                                    <text class="innova-master-text">WEATHER</text>
+                                </view>
+                                
+                            </view>
+                        </view>
+
+                        <view class="default-row-container">
+                            <Cloud-Switch/>
+                            <Innova-Slider/>
                         </view>
                         
+                        <view class="default-row-container">
+                            <Windsock-Switch/>
+                            <Innova-Slider/>
+                        </view>
+                        
+                        <view class="default-row-container">
+                            <Ice-Switch/>
+                            <Innova-Slider/>
+                        </view>
+                        
+                        <view class="double-row-container">
+                            <view class="menu-button-container">
+                                <view style="flex:0.20;">
+                                    <text class="menu-title-center">WEATHER SHIELD ACTIVE</text>
+                                </view>
+                                <view class="icon-container">
+                                    <Pressable :on-press='() => changeMenu(0)'>
+                                        <image class="icon" resizeMode="contain"
+                                            :source="require('./../../assets/Innova/Weather/weathertres.png')"/>
+                                    </Pressable>
+                                </view>
+                            </view>
+                        </view>
                     </view>
-                </view>
 
-                <view class="default-row-container">
-                    <Cloud-Switch/>
-                    <Innova-Slider/>
                 </view>
-                
-                <view class="default-row-container">
-                    <Windsock-Switch/>
-                    <Innova-Slider/>
-                </view>
-                
-                <view class="default-row-container">
-                    <Ice-Switch/>
-                    <Innova-Slider/>
-                </view>
-                
-                <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER SHIELD ACTIVE</text>
-                        </view>
-                        <view class="icon-container">
-                            <Pressable :on-press='() => changeMenu(0)'>
-                                <image class="icon" resizeMode="contain"
-                                    :source="require('./../../assets/Innova/Weather/weathertres.png')"/>
-                            </Pressable>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </ImageBackground>
-    </GestureRecognizer>
+            </ImageBackground>
+        </GestureRecognizer>
+    </SafeAreaView>
+    
     </view>
 </template>
 

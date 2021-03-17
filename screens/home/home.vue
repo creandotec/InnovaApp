@@ -1,7 +1,11 @@
 <template>
     <view class="container">
+        
+        <StatusBar barStyle="dark-content" backgroundColor="#dcba28"/>
+        <SafeAreaView style="flex:1">
         <ImageBackground :source="require('./../../assets/Innova/BG/homepage.png')"
         class="backgroundImage" resizeMode="stretch">
+            
             <view class="innova-layout">
                 <view class="row-header">
                     <!-- <view class="header-container">
@@ -115,7 +119,7 @@
                             <text class="menu-title-left">MULTIMEDIA</text>
                         </view>
                         <view class="icon-container">    
-                            <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/multimedia.png')"/>
+                            <image class="icon" resizeMode="contain" :source="require('./../../assets/Innova/Home/multimediaoff.png')"/>
                         </view>
                     </view>
                     
@@ -123,6 +127,7 @@
 
             </view>
         </ImageBackground>
+        </SafeAreaView>
     </view>
     
 </template>
@@ -172,7 +177,7 @@ export default {
     .menu-button-container{
         flex:1;
         flex-direction: column;
-        border-color: rgba(192, 192, 5, 0.76);
+        border-color:#dcba28;
         border-width: 2;
     }
     .menu-title-left{

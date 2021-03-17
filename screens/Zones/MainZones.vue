@@ -1,51 +1,56 @@
 <template>
 <view class="container">
+    <StatusBar/>
     <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <Innova-Header/>
-                
-                <Screen-Title screenTitle="ZONES SELECTION"/>
 
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <window-switch master="true"/>
+                <view style="flex:1.5; flex-direction:column">
+                    <Innova-Header/>                
+                    <Screen-Title screenTitle="ZONES SELECTION"/>
+                </view>
 
-                        <view class="master-text-container">
-                            <text class="innova-master-text">ZONES</text>
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <window-switch master="true"/>
+
+                            <view class="master-text-container">
+                                <text class="innova-master-text">ZONES</text>
+                            </view>
+                            
+                        </view>
+                    </view>
+
+                    <view class="double-row-container">
+                        <view style="flex:3; flex-direction:column; justify-content:center; align-items:flex-end; margin-right:2%">
+                            <text class="innova-master-text">TIMER</text>
+                        </view>
+
+                        <view style="flex:1; flex-direction:column; justify-content:center; align-items:center; padding-right:5%;">
+                            <Pressable :on-press="() => enterTimerConfig()">
+                                <image style="flex:1;" resizeMode="contain"
+                                    :source="require('./../../assets/Innova/Zones/clockofficon.png')"/>
+                            </Pressable>
                         </view>
                         
                     </view>
-                </view>
 
-                <view class="double-row-container">
-                    <view style="flex:3; flex-direction:column; justify-content:center; align-items:flex-end; margin-right:2%">
-                        <text class="innova-master-text">TIMER</text>
+                    <view class="zone-control-container">
+                        <view style="flex:1; flex-direction:row;">
+                            <zone-switch-1/>
+                            <zone-switch-2/>
+                            <zone-switch-3/>
+                        </view>
+
+                        <view style="flex:1; flex-direction:row;">
+                            <zone-switch-4/>
+                            <zone-switch-5/>
+                            <zone-switch-6/>
+                        </view>
+
                     </view>
-
-                    <view style="flex:1; flex-direction:column; justify-content:center; align-items:center; padding-right:5%;">
-                        <Pressable :on-press="() => enterTimerConfig()">
-                            <image style="flex:1;" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Zones/clockofficon.png')"/>
-                        </Pressable>
-                    </view>
-                    
-                </view>
-
-                <view class="zone-control-container">
-                    <view style="flex:1; flex-direction:row;">
-                        <zone-switch-1/>
-                        <zone-switch-2/>
-                        <zone-switch-3/>
-                    </view>
-
-                    <view style="flex:1; flex-direction:row;">
-                        <zone-switch-4/>
-                        <zone-switch-5/>
-                        <zone-switch-6/>
-                    </view>
-
                 </view>
                 
         </ImageBackground>

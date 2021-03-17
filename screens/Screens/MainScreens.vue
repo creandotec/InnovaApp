@@ -1,57 +1,60 @@
 <template>
 <view class="container">
+    <StatusBar/>
     <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
+                <view style="flex:1.5; flex-direction:column">
+                    <Innova-Header/>
+                    <Screen-Title screenTitle="SCREENS"/>
+                </view>
                 
-                <Innova-Header/>
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <screen-switch-alt master="'true"/>
+                            <view class="master-text-container">
+                                <text class="innova-master-text">SCREENS</text>
+                            </view>
+                            
+                        </view>
+                    </view>
 
-                <Screen-Title screenTitle="SCREENS"/>
-                
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <screen-switch-alt master="'true"/>
-                        <view class="master-text-container">
-                            <text class="innova-master-text">SCREENS</text>
+                    <view class="default-row-container">
+                        <screen-switch/>
+                        <screen-switch/>
+                        <screen-switch/>
+                        <screen-switch/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <screen-switch/>
+                        <screen-switch/>
+                        <screen-switch/>
+                        <screen-switch/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <screen-switch-alt size="lg"/>
+                        <Innova-Slider/>
+                    </view>
+                    
+                    <view class="double-row-container">
+                        <view class="menu-button-container">
+                            <view style="flex:0.20;">
+                                <text class="menu-title-center">SUN TRACER</text>
+                            </view>
+                            <SunSwitch size="xl"/>
+                        </view>
+                        <view class="menu-button-container" >
+                            <view style="flex:0.20;">
+                                <text class="menu-title-center">WEATHER</text>
+                            </view>
+                            <WeatherSwitch size="md"/>
                         </view>
                         
                     </view>
-                </view>
-
-                <view class="default-row-container">
-                    <screen-switch/>
-                    <screen-switch/>
-                    <screen-switch/>
-                    <screen-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <screen-switch/>
-                    <screen-switch/>
-                    <screen-switch/>
-                    <screen-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <screen-switch-alt size="lg"/>
-                    <Innova-Slider/>
-                </view>
-                
-                <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">SUN TRACER</text>
-                        </view>
-                        <SunSwitch size="xl"/>
-                    </view>
-                    <view class="menu-button-container" >
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER</text>
-                        </view>
-                        <WeatherSwitch size="md"/>
-                    </view>
-                    
                 </view>
             </view>
         </ImageBackground>

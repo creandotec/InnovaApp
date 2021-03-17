@@ -1,71 +1,79 @@
 <template>
 <view class="container">
+    <StatusBar/>
+    <SafeAreaView style="flex:1">
     <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
-                <Innova-Header/>
 
-                <Screen-Title screenTitle="ROOF LOUVERS"/>
-                
-                <view class="main-switch-container">
-                    <view class="master-container">
-                        <!-- <view class="master-icon-container">
-                            <image class="master-icon" resizeMode="contain"
-                                :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
-                        </view> -->
-                        <louver-switch master="'true'"/>
-                        <view class="master-text-container">
-                            <text class="innova-master-text">LOUVERS</text>
+                <view style="flex:1.5; flex-direction:column">
+                    <Innova-Header/>
+                    <Screen-Title screenTitle="ROOF LOUVERS"/>
+                </view>
+
+                <view style="flex:8; flex-direction:column">
+                    <view class="main-switch-container">
+                        <view class="master-container">
+                            <!-- <view class="master-icon-container">
+                                <image class="master-icon" resizeMode="contain"
+                                    :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
+                            </view> -->
+                            <louver-switch master="'true'"/>
+                            <view class="master-text-container">
+                                <text class="innova-master-text">LOUVERS</text>
+                            </view>
+                            
+                        </view>
+                    </view>
+
+                    <view class="default-row-container">
+                        <louver-switch/>
+
+                        <louver-switch/>
+
+                        <louver-switch/>
+
+                        <louver-switch/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <louver-switch/>
+
+                        <louver-switch/>
+
+                        <louver-switch/>
+
+                        <louver-switch/>
+                    </view>
+                    
+                    <view class="default-row-container">
+                        <louver-switch size="lg"/>
+
+                        <Innova-Slider/>
+                    </view>
+                    
+                    <view class="double-row-container">
+                        <view class="menu-button-container">
+                            <view style="flex:0.20;">
+                                <text class="menu-title-center">SUN TRACER</text>
+                            </view>
+                            <sun-switch size="xl"/>
+                        </view>
+                        <view class="menu-button-container">
+                            <view style="flex:0.20;">
+                                <text class="menu-title-center">WEATHER</text>
+                            </view>
+                            <weather-switch size="md"/>
                         </view>
                         
                     </view>
                 </view>
 
-                <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-
-                    <louver-switch/>
-                </view>
-                
-                <view class="default-row-container">
-                    <louver-switch size="lg"/>
-
-                    <Innova-Slider/>
-                </view>
-                
-                <view class="double-row-container">
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">SUN TRACER</text>
-                        </view>
-                        <sun-switch size="xl"/>
-                    </view>
-                    <view class="menu-button-container">
-                        <view style="flex:0.20;">
-                            <text class="menu-title-center">WEATHER</text>
-                        </view>
-                        <weather-switch size="md"/>
-                    </view>
-                    
-                </view>
             </view>
         </ImageBackground>
     </GestureRecognizer>
+    </SafeAreaView>
     </view>
 </template>
 
