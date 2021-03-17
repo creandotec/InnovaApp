@@ -45,6 +45,7 @@ export default {
         color: whitesmoke;
         margin-top:2%;
         margin-bottom: 2%;
+        padding-left: 2%;
     }
     .backgroundTitle {
         flex:1;

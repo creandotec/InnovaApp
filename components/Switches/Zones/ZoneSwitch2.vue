@@ -86,7 +86,7 @@ export default {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        border-color: rgba(255, 255, 0, 0.76);
+        border-color:#dcba28;
         border-width: 2;
         padding-top: 0%;
         padding-bottom: 0%;

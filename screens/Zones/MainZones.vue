@@ -146,19 +146,19 @@ export default {
 
 <style>
     .zone-control-container{
-        flex: 6;
+        flex: 10;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding-right: 2%;
         padding-left: 2%;
-        padding-top: 10%;
-        padding-bottom: 15%;
+        padding-top: 5%;
+        padding-bottom: 10%;
     }
     .menu-button-container-border{
         flex:1;
         flex-direction: column;
-        border-color: rgba(255, 255, 0, 0.76);
+        border-color:#dcba28;
         border-width: 2;
     }
     .menu-title-center{
