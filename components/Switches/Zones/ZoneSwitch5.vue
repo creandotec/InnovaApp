@@ -1,9 +1,9 @@
 <template>
     <view v-bind:class="{'icon-container':!master, 'master-icon-container':master}">
-        <Pressable :on-press='() => switchToggle()'  :on-long-press='() => turnoffZone()'>
+        <Pressable class="press-class" :on-press='() => switchToggle()'  :on-long-press='() => turnoffZone()'>
             <image v-bind:class="{'icon':size=='md' && !master, 'icon-sm':size=='sm' && !master, 
                 'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&master, 'master-icon':master}" 
-                resizeMode="center"
+                resizeMode="stretch"
                 :source="imageSource"/>
         </Pressable>
     </view>
@@ -74,12 +74,17 @@ export default {
         margin-right: 2%;
     }
     .icon{
-        flex:1;
+        flex:0.9;
+        width: 90%;
         flex-direction: column;
         justify-content: center;
+        align-items: center;        
+    }
+    .press-class {
+        flex:1;
+        flex-direction:column;
+        justify-content: center;
         align-items: center;
-        width: 100;
-        height:100;
     }
     .icon-container {
         flex:1;

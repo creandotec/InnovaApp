@@ -13,7 +13,7 @@
                 :on-handler-state-change="(evt) => adjustThumb(evt)"
                 :on-gesture-event="(evt) => moveCursor(evt)">
                 <thumb-cursor :position="barraValue" resizeMode="stretch"
-                    :source="require('./../assets/Innova/Multi/Cursor.png')"/>
+                    :source="require('./../assets/Innova/Multi/cursor.png')"/>
             </PanGestureHandler>
         </ImageBackground>
     </view>
