@@ -151,7 +151,6 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        align-content: center;
     }
     .master-icon-container{
         flex:0.8;

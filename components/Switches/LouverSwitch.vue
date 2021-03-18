@@ -1,9 +1,9 @@
 <template>
     <view v-bind:class="{'icon-container':!master, 'master-icon-container':master}">
-        <Pressable :on-press='() => switchToggle()'>
+        <Pressable class="press-class" :on-press='() => switchToggle()'>
             <image v-bind:class="{'icon':size=='md' && !master, 'icon-sm':size=='sm' && !master, 
                 'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&master, 'master-icon':master}" 
-                resizeMode="contain" 
+                :resizeMode="resizeStyle" 
                 :source="imageSource"/>
         </Pressable>
     </view>    
@@ -42,6 +42,16 @@ export default {
             else{
                 return require("../../assets/Innova/Louvers/louversoff.png");
             }
+        },
+        resizeStyle: function(){
+            let $vm = this;
+            if(!$vm.master)
+            {
+                return "contain";
+            }
+            else{
+                return "stretch";
+            }
         }
     }
 }
@@ -50,20 +60,23 @@ export default {
 <style scoped>
     .master-icon-container{
         flex:0.8;
-        /* background-color: ghostwhite; */
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
     .master-icon{
-        flex:1;
-        margin-top:0%;
-        margin-bottom: 0%;
+        flex:0.8;
+        width: 70%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;        
     }
     .icon{
-        flex:0.9;
-        margin-top: 5%;
-        margin-bottom: 5%;
+        flex:0.8;
+    }
+    .press-class {
+        flex:1;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
     }
     .icon-container {
         flex:1;
