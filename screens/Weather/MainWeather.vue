@@ -13,7 +13,7 @@
                         <Innova-Header/>
                         <Screen-Title screenTitle="WEATHER SETTINGS"/>
                     <view/>
-                    
+
                     <view style="flex:11; flex-direction:column">
                         <view class="main-switch-container">
                             <view class="master-container">
@@ -25,7 +25,7 @@
                                 
                             </view>
                         </view>
-
+                        <view style="flex:1"> </view>
                         <view class="default-row-container">
                             <Cloud-Switch/>
                             <Innova-Slider/>
@@ -41,11 +41,9 @@
                             <Innova-Slider/>
                         </view>
                         
-                        <view class="double-row-container">
+                        <view class="default-row-container">
                             <view class="menu-button-container">
-                                <view style="flex:0.20;">
-                                    <text class="menu-title-center">WEATHER SHIELD ACTIVE</text>
-                                </view>
+                                
                                 <view class="icon-container">
                                     <Pressable :on-press='() => changeMenu(0)'>
                                         <image class="icon" resizeMode="contain"
@@ -190,9 +188,7 @@ export default {
         margin-bottom: 8%;
     }
     .icon{
-        flex:0.9;
-        margin-top: 5%;
-        margin-bottom: 5%;
+        flex:0.8;
     }
     .icon-xl{
         flex:0.9;

@@ -58,7 +58,7 @@
                             <view style="flex:0.20;">
                                 <text class="menu-title-center">SUN TRACER</text>
                             </view>
-                            <sun-switch size="xl"/>
+                            <sun-switch :master="'true'"/>
                         </view>
                         <view class="menu-button-container">
                             <view style="flex:0.20;">

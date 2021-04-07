@@ -56,7 +56,7 @@ export default {
         align-items: center;
     }
     .master-icon{
-        flex:0.8;
+        flex:0.75;
         margin-top:0%;
         margin-bottom: 0%;
     }

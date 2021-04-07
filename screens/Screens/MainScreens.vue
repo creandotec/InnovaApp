@@ -1,6 +1,7 @@
 <template>
 <view class="container">
     <StatusBar/>
+    <SafeAreaView style="flex:1">
     <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
@@ -36,7 +37,7 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <screen-switch-alt size="lg"/>
+                        <screen-switch size="md"/>
                         <Innova-Slider/>
                     </view>
                     
@@ -45,7 +46,7 @@
                             <view style="flex:0.20;">
                                 <text class="menu-title-center">SUN TRACER</text>
                             </view>
-                            <SunSwitch size="xl"/>
+                            <SunSwitch :master="'true'"/>
                         </view>
                         <view class="menu-button-container" >
                             <view style="flex:0.20;">
@@ -59,6 +60,7 @@
             </view>
         </ImageBackground>
     </GestureRecognizer>
+    </SafeAreaView>
     </view>
 </template>
 

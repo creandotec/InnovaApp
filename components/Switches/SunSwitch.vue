@@ -1,9 +1,9 @@
 <template>
     <view v-bind:class="{'icon-container':!master, 'master-icon-container':master}">
-        <Pressable :on-press='() => switchToggle()'>
+        <Pressable class="press-class" :on-press='() => switchToggle()'>
             <image v-bind:class="{'icon':size=='md' && !master, 'icon-sm':size=='sm' && !master, 
-                'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&master, 'master-icon':master}" 
-                resizeMode="contain" 
+                'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl' && !master, 'master-icon':master}"  
+                resizeMode="stretch"
                 :source="imageSource"/>
         </Pressable>
     </view>    
@@ -52,30 +52,30 @@ export default {
         flex:0.8;
         /* background-color: ghostwhite; */
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        padding-bottom: 10%;
     }
     .master-icon{
-        flex:0.9;
-        margin-top:0%;
-        margin-bottom: 0%;
+        flex:0.7;
+        width: 35%;
     }
     .icon{
         flex:0.9;
-        margin-top: 5%;
-        margin-bottom: 5%;
+    }
+    .press-class {
+        flex:1;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
     }
     .icon-container {
         flex:1;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
     .icon-sm{
         flex:0.5;
     }
     .icon-xl{
-        flex:0.9;
+        flex:1;
     }
     .icon-xl-2{
         flex:2;

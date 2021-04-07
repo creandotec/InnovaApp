@@ -1,6 +1,7 @@
 <template>
     <view class="container">
         <StatusBar/>
+        <SafeAreaView style="flex:1">
         <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
@@ -50,6 +51,7 @@
             </view>
         </ImageBackground>
         </GestureRecognizer>
+        </SafeAreaView>
     </view>
 </template>
 
@@ -144,7 +146,7 @@ export default {
         flex-direction: row;
     }
     .main-switch-container{
-        flex:3.5;
+        flex:3;
         flex-direction: row;
     }
     .default-row-container{

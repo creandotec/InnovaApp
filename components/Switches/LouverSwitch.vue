@@ -2,7 +2,7 @@
     <view v-bind:class="{'icon-container':!master, 'master-icon-container':master}">
         <Pressable class="press-class" :on-press='() => switchToggle()'>
             <image v-bind:class="{'icon':size=='md' && !master, 'icon-sm':size=='sm' && !master, 
-                'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&master, 'master-icon':master}" 
+                'icon-xl':size=='lg' && !master, 'icon-xl-2':size=='xl'&&!master, 'master-icon':master}" 
                 :resizeMode="resizeStyle" 
                 :source="imageSource"/>
         </Pressable>

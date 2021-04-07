@@ -16,14 +16,14 @@
         <view style="flex:1.5; flex-direction:column; justify-content:center; align-items:center; border-bottom-color:rgba(192, 192, 5, 0.76); border-bottom-width: 2;">
             <view style="flex:1; flex-direction:row">
                 <text style="color: white;">ON</text>
-                <text-input :value="sceneTimeOn" text-align="center" :on-change-text="(text)=>setSceneName(text)"
+                <text-input :value="sceneTimeOn" text-align="center" :on-change-text="(text)=>setOnTime(text)"
                     style="flex:1; color:white;">
                 </text-input>
                 <text style="color: white;">AM</text>
             </view>
             <view style="flex:1; flex-direction:row">
                 <text style="color: white;">OFF</text>
-                <text-input :value="sceneTimeOff" text-align="center" :on-change-text="(text)=>setSceneName(text)"
+                <text-input :value="sceneTimeOff" text-align="center" :on-change-text="(text)=>setOffTime(text)"
                     style="flex:1; color:white;">
                 </text-input>
                 <text style="color: white;">AM</text>
@@ -64,6 +64,12 @@ export default {
     methods:{
         setSceneName: function(text){
             this.sceneNumber = text;
+        },
+        setOffTime: function(text){
+            this.sceneTimeOff = text;
+        },
+        setOnTime: function(text){
+            this.sceneTimeOn = text;
         },
         switchState: function(){
             this.timerState = !this.timerState;
