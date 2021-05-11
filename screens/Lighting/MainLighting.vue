@@ -14,7 +14,8 @@
                 <view style="flex:8; flex-direction:column">
                     <view class="main-switch-container">
                         <view class="master-container">
-                            <light-switch master="'true"/>
+                            <light-switch master="'true" :status="masterStatus"
+                                v-on:update-status="(event) => eventoRecibido(event)"/>
 
                             <view class="master-text-container">
                                 <text class="innova-master-text">LIGHTHING</text>
@@ -24,9 +25,10 @@
                     </view>
 
                     <view class="default-row-container">
-                        <gutter-switch/>
+                        <gutter-switch name="1" :status="newStatus1" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <Innova-Slider/>
+                        <Innova-Slider name="gutter" menu="lighting" />
 
                         <view class="icon-container">
                             <Pressable :on-press='() => changeMenu(0)'>
@@ -37,8 +39,9 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <louver-light-switch/>
-                        <Innova-Slider/>
+                        <louver-light-switch name="2" :status="newStatus2" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
+                        <Innova-Slider name="louver" menu="lighting"/>
                         <view class="icon-container">
                             <Pressable :on-press='() => changeMenu(1)'>
                                 <image class="icon-sm" resizeMode="contain"
@@ -48,9 +51,10 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <ceilling-switch/>
+                        <ceilling-switch name="3" :status="newStatus3" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <Innova-Slider/>
+                        <Innova-Slider name="ciling" menu="lighting"/>
                         <view class="icon-container">
                             <Pressable :on-press='() => changeMenu(2)'>
                                 <image class="icon-sm" resizeMode="contain"
@@ -60,17 +64,19 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <sconce-switch size="md"/>
+                        <sconce-switch size="md" name="4" :status="newStatus4" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <Innova-Slider/>
+                        <Innova-Slider name="sconce" menu="lighting"/>
 
                         <view style="width:16%"></view>
                     </view>
                     
                     <view class="default-row-container">
-                        <spare-switch/>
+                        <spare-switch name="5" :status="newStatus5" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <Innova-Slider/>
+                        <Innova-Slider name="spare" menu="lighting"/>
                         
                         <view style="width:16%"></view>
                     </view>
@@ -95,6 +101,8 @@ import ScreenTitle from "./../../components/ScreenTitle";
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import axios from 'axios';
+
 export default {
     components:{
         "Innova-Slider":Slider,
@@ -115,7 +123,13 @@ export default {
     },
     data: function(){
         return{
-
+            statusSwitch1: 0,
+            statusSwitch2: 0,
+            statusSwitch3: 0,
+            statusSwitch4: 0,
+            statusSwitch5: 0,
+            statusSwitch6: 0,
+            masterStatus: 0
         }
     },
     methods:{
@@ -142,7 +156,119 @@ export default {
             else if(menu == 2){
                 this.navigation.navigate("RGB3");
             }
+        },
+        eventoRecibido: function(event){
+            let $vm = this;
+            console.log(event.name);
+            if(event.name == "lighting"){
+                $vm.masterStatus = event.value;
+                this.updateMasterStatus(event.name, event.value);
+            }
+            else{
+                if(event.name == "1"){
+                    $vm.statusSwitch1 = event.value;
+                }
+                else if(event.name == "2"){
+                    $vm.statusSwitch2 = event.value;
+                }
+                else if(event.name == "3"){
+                    $vm.statusSwitch3 = event.value;
+                }
+                else if(event.name == "4"){
+                    $vm.statusSwitch4 = event.value;
+                }
+                else if(event.name == "5"){
+                    $vm.statusSwitch5 = event.value;
+                }
+                else if(event.name == "6"){
+                    $vm.statusSwitch6 = event.value;
+                }
+                
+                this.updateSwitchStatus(event.name, event.value);
+            }
+        },
+        querySwitchStatus: function(){
+            let $vm = this;
+            console.log("Preguntando por lighting");
+            axios.get('http://192.168.0.4:3000/lighting')
+                .then(res => {
+                    $vm.statusSwitch1 = res.data[0].status;
+                    $vm.statusSwitch2 = res.data[1].status;
+                    $vm.statusSwitch3 = res.data[2].status;
+                    $vm.statusSwitch4 = res.data[3].status;
+                    $vm.statusSwitch5 = res.data[4].status;
+                    // $vm.statusLouver7 = res.data[6].status;
+                    // $vm.statusLouver8 = res.data[7].status;
+                    // $vm.statusLouver9 = res.data[8].status;
+                    // $vm.statusLouver10 = res.data[9].status;
+                    // $vm.statusLouver11 = res.data[10].status;
+                    $vm.masterStatus = res.data[5].status;
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+        },
+        updateSwitchStatus: function(switchName, newStatus){
+            axios.post('http://192.168.0.4:3000/lighting/update', {
+                name: switchName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó iluminación");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        updateMasterStatus: function(masterName, newStatus){
+            axios.post('http://192.168.0.4:3000/masters/update', {
+                masterSwitch: masterName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó el switch maestro");
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
+    },
+    computed: {
+        newMasterStatus: function(){
+            let $vm = this;
+            return $vm.masterStatus;
+        },
+        newStatus1: function(){
+            let $vm = this;
+            console.log("Presioné el switch");
+            return $vm.statusSwitch1;
+        },
+        newStatus2: function(){
+            let $vm = this;
+            return $vm.statusSwitch2;
+        },
+        newStatus3: function(){
+            let $vm = this;
+            return $vm.statusSwitch3;
+        },
+        newStatus4: function(){
+            let $vm = this;
+            return $vm.statusSwitch4;
+        },
+        newStatus5: function(){
+            let $vm = this;
+            return $vm.statusSwitch5;
+        },
+        newStatus6: function(){
+            let $vm = this;
+            return $vm.statusSwitch6;
+        }
+    },
+    mounted: function(state){
+        let $vm = this;
+        $vm.querySwitchStatus();
     }
 }
 </script>

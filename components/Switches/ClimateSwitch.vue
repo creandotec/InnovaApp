@@ -17,6 +17,14 @@ export default {
         }
     },
     props: {
+        name:{
+            Type: Number,
+            default: 0
+        },
+        status:{
+            Type:Boolean,
+            default: false
+        },
         master: {
             Type: Boolean,
             default: false
@@ -28,21 +36,33 @@ export default {
     },
     methods:{
         switchToggle: function(){
+            var data = {};
             this.initialState = !this.initialState;
-            console.log(this.initialState);
+            if(this.master){
+                data.name = "climate";
+            }
+            else{
+                data.name = this.name;
+            }
+            data.value = this.initialState;
+            this.$emit('update-status', data);
         }
     },
     computed:{
         imageSource: function(){
             let $vm = this;
             
-            if($vm.initialState == true){
+            if($vm.status == true){
                 return require("../../assets/Innova/Climate/climateon.png");
             }
             else{
                 return require("../../assets/Innova/Climate/climateoff.png");
             }
         }
+    },
+    created(){
+        let $vm = this;
+        $vm.initialState = $vm.status;
     }
 }
 </script>

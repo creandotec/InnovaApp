@@ -23,6 +23,9 @@
 import { Animated, PanResponder } from 'react-native';
 import  {PanGestureHandler} from 'react-native-gesture-handler';
 import {ThumbCursor} from './thumb2.js';
+
+import axios from 'axios';
+
 export default {
     components:{
         Animated, PanGestureHandler, 
@@ -31,6 +34,16 @@ export default {
     },
     props:{
         //step: {type: Number, default: 0}
+        curPosition: {
+            Type: Number,
+            default: 0
+        },
+        name: {
+            Type: String
+        },
+        menu: {
+            Type: String
+        }
     },
     data: function(){
         return{
@@ -39,7 +52,9 @@ export default {
             slideWidth: 0,
             slideInit: 0,
             step: 0,
-            stepInflexion: 0
+            stepInflexion: 0,
+            regAddress: 0,
+
         }
     },
     methods:{
@@ -48,15 +63,12 @@ export default {
             let evento = evt.nativeEvent;
 
             if (evento.state == 5){
-                console.log("Se liberó el cursor");
                 var restante = $vm.barraValue % $vm.step;
                 var tempPos = $vm.barraValue - restante;
-                console.log($vm.step);
-                console.log(restante);
-                console.log($vm.barraValue);
                 tempPos = tempPos / $vm.step;
-                console.log(tempPos);
                 $vm.barraValue = tempPos * $vm.step;
+
+                $vm.updateSlider();
             }
         },
         getSlideWidth: function(event){
@@ -105,7 +117,54 @@ export default {
                 }
             }
             
+        },
+        getSlidersValue: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/sliders', {
+                params:{
+                    menu:$vm.menu,
+                    slider: $vm.name
+                }
+            })
+            .then( res=>{
+                $vm.barraValue = res.data[0].value;
+                $vm.regAddress = res.data[0].register_address;
+                return;
+            })
+            .catch( err=> {
+                console.log(err);
+                return;
+            })
+        },
+        updateSlider: function(){
+            let $vm = this;
+            axios.post('http://192.168.0.4:3000/sliders/update', {
+                name: $vm.name,
+                position: $vm.barraValue,
+                screen: $vm.menu,
+                registerAddress: $vm.regAddress
+            })
+            .then(res =>{
+                console.log("Se actualizó el slider de manera correcta")
+            })
+            .catch( err=> {
+                console.log(err);
+            })
         }
+    },
+    computed: {
+        getPosition: function(){
+            var data = {};
+            let $vm = this;
+            data.position = $vm.barraValue;
+            data.name = $vm.name;
+            this.$emit('update-slider', data);
+            return $vm.curPosition;
+        }
+    },
+    mounted(){
+        // this.barraValue = this.curPosition;
+        this.getSlidersValue();
     }
 }
 </script>

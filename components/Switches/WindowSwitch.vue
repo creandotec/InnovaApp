@@ -17,6 +17,10 @@ export default {
         }
     },
     props: {
+        status:{
+            type: Number,
+            default: 0
+        },
         master: {
             Type: Boolean,
             default: false
@@ -28,21 +32,29 @@ export default {
     },
     methods:{
         switchToggle: function(){
+            var data = {};
             this.initialState = !this.initialState;
-            console.log(this.initialState);
+            data.zone = "zones";
+            data.value = this.initialState;
+            this.$emit('update-status', data);
+            console.log(data.zone);
         }
     },
     computed:{
         imageSource: function(){
             let $vm = this;
-            
-            if($vm.initialState == true){
+
+            if($vm.initialState == true || $vm.status == true){
                 return require("../../assets/Innova/Zones/zoneson.png");
             }
             else{
                 return require("../../assets/Innova/Zones/zonesoff.png");
             }
         }
+    },
+    created(){
+        let $vm = this;
+        $vm.initialState = $vm.status;
     }
 }
 </script>

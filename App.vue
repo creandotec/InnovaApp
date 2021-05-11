@@ -24,6 +24,9 @@ import rgb1 from './screens/Lighting/RGBLighting1';
 import rgb2 from './screens/Lighting/RGBLighting2';
 import rgb3 from './screens/Lighting/RGBLighting3';
 
+import WS from 'react-native-websocket';
+
+
 const StackNavigator = createStackNavigator(
   {
     Home: home,
@@ -49,7 +52,7 @@ const StackNavigator = createStackNavigator(
 const AppNavigator = createAppContainer(StackNavigator);
 
 export default {
-  components: {AppNavigator},
+  components: {AppNavigator, WS},
 
   data: function() {
     return {

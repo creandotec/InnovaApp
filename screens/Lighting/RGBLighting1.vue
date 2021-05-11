@@ -26,20 +26,18 @@
                     <view class="default-row-container">
                         <red-switch/>
 
-                        <Innova-Slider-Red/>
+                        <Innova-Slider-Red name="gutter_red" menu="lighting"/>
                     </view>
                     
                     <view class="default-row-container">
                         <green-switch/>
-                        <Innova-Slider-Green/>
+                        <Innova-Slider-Green name="gutter_green" menu="lighting"/>
                         
                     </view>
                     
                     <view class="default-row-container">
                         <blue-switch/>
-
-                        <Innova-Slider-Blue/>
-
+                        <Innova-Slider-Blue name="gutter_blue" menu="lighting"/>
                     </view>
                 </view>
                 
@@ -67,6 +65,8 @@ import InnovaHeader from "./../../components/InnovaHeader";
 import ScreenTitle from "./../../components/ScreenTitle";
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
+import axios from 'axios';
 
 export default {
     components:{

@@ -10,13 +10,21 @@
 </template>
 
 <script>
+import {ZoneSwitch} from './zoneSwitch.js';
+
 export default {
+    components:{
+        ZoneSwitch
+    },
     data: function(){
         return{
             initialState: 0,
         }
     },
     props: {
+        status: {
+            Type: Number,
+        },
         master: {
             Type: Boolean,
             default: false
@@ -28,14 +36,25 @@ export default {
     },
     methods:{
         turnoffZone: function(){
+            var data = {};
             this.initialState = 0;
+            data.zone = "3";
+            data.value = this.initialState;
+            this.$emit('update-status', data);
         },
         switchToggle: function(){
+            var data = {};
             if(this.initialState == 0 || this.initialState == 3){
                 this.initialState = 1;
+                data.zone = "3";
+                data.value = this.initialState;
+                this.$emit('update-status', data);
             }
             else{
                 this.initialState = 3;
+                data.zone = "3";
+                data.value = this.initialState;
+                this.$emit('update-status', data);
             }
         }
     },
@@ -43,17 +62,21 @@ export default {
         imageSource: function(){
             let $vm = this;
             
-            if($vm.initialState == 1){
+            if($vm.initialState == 1 || $vm.status == 1){
                 return require("../../../assets/Innova/Zones/dotres.png");
             }
-            else if($vm.initialState == 3){
+            else if($vm.initialState == 3 || $vm.status == 3){
                 return require("../../../assets/Innova/Zones/dptres.png");
             }
-            else if($vm.initialState == 0){
+            else if($vm.initialState == 0 || $vm.status == 0){
                 return require("../../../assets/Innova/Zones/dtres.png");
             }
 
         }
+    },
+    created(){
+        let $vm = this;
+        $vm.initialState = $vm.status;
     }
 }
 </script>

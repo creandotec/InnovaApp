@@ -19,7 +19,8 @@
                                 <image class="master-icon" resizeMode="contain"
                                     :source="require('./../../assets/Innova/Louvers/louversoff.png')"/>
                             </view> -->
-                            <louver-switch master="'true'"/>
+                            <louver-switch master="'true'"  :status="masterStatus"
+                                v-on:update-status="(event) => eventoRecibido(event) "/>
                             <view class="master-text-container">
                                 <text class="innova-master-text">LOUVERS</text>
                             </view>
@@ -28,29 +29,39 @@
                     </view>
 
                     <view class="default-row-container">
-                        <louver-switch/>
+                        <louver-switch louverNumber="1" :status="newStatus1"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="2" :status="newStatus2"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="3" :status="newStatus3"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="4" :status="newStatus4"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
                     </view>
                     
                     <view class="default-row-container">
-                        <louver-switch/>
+                        <louver-switch louverNumber="5" :status="newStatus5"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="6" :status="newStatus6"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="7" :status="newStatus7"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <louver-switch/>
+                        <louver-switch louverNumber="8" :status="newStatus8"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
                     </view>
                     
                     <view class="default-row-container">
-                        <louver-switch size="lg"/>
+                        <louver-switch size="lg" louverNumber="9" :status="newStatus9"
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
 
-                        <Innova-Slider/>
+                        <Innova-Slider name="main" menu="louvers" :curPosition="newSliderPosition1" v-on:update-slider="(event) => sliderEvent(event)" 
+                            v-on:guardar-slider="(event) => guardarSlider(event)" />
                     </view>
                     
                     <view class="double-row-container">
@@ -58,13 +69,15 @@
                             <view style="flex:0.20;">
                                 <text class="menu-title-center">SUN TRACER</text>
                             </view>
-                            <sun-switch :master="'true'"/>
+                            <sun-switch :master="'true'" name="10" :status="newStatus10"
+                                v-on:update-status="(event) => eventoRecibido(event) "/>
                         </view>
                         <view class="menu-button-container">
                             <view style="flex:0.20;">
                                 <text class="menu-title-center">WEATHER</text>
                             </view>
-                            <weather-switch size="md"/>
+                            <weather-switch size="md" name="11" :status="newStatus11"
+                                v-on:update-status="(event) => eventoRecibido(event) "/>
                         </view>
                         
                     </view>
@@ -87,6 +100,7 @@ import SunSwitch from './../../components/Switches/SunSwitch.vue';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import axios from 'axios';
 export default {
     components:{
         "Innova-Slider":Slider,
@@ -103,7 +117,19 @@ export default {
     },
     data: function(){
         return{
-
+            statusLouver1: 0,
+            statusLouver2: 0,
+            statusLouver3: 0,
+            statusLouver4: 0,
+            statusLouver5: 0,
+            statusLouver6: 0,
+            statusLouver7: 0,
+            statusLouver8: 0,
+            statusLouver9: 0,
+            statusLouver10: 0,
+            statusLouver11: 0,
+            masterStatus: 0,
+            sliderPosition1: 0
         }
     },
     methods:{
@@ -124,7 +150,205 @@ export default {
             if(menu == 0){
                 this.navigation.navigate("Home");
             }
+        },
+        eventoRecibido: function(event){
+            let $vm = this;
+            console.log(event.name);
+            if(event.name == "louvers"){
+                $vm.masterStatus = event.value;
+                this.updateMasterStatus(event.name, event.value);
+            }
+            else{
+                if(event.name == "1"){
+                    $vm.statusLouver1 = event.value;
+                }
+                else if(event.name == "2"){
+                    $vm.statusLouver2 = event.value;
+                }
+                else if(event.name == "3"){
+                    $vm.statusLouver3 = event.value;
+                }
+                else if(event.name == "4"){
+                    $vm.statusLouver4 = event.value;
+                }
+                else if(event.name == "5"){
+                    $vm.statusLouver5 = event.value;
+                }
+                else if(event.name == "6"){
+                    $vm.statusLouver6 = event.value;
+                }
+                else if(event.name == "7"){
+                    $vm.statusLouver7 = event.value;
+                }
+                else if(event.name == "8"){
+                    $vm.statusLouver8 = event.value;
+                }
+                else if(event.name == "9"){
+                    $vm.statusLouver9 = event.value;
+                }
+                else if(event.name == "10"){
+                    $vm.statusLouver10 = event.value;
+                }
+                else if(event.name == "11"){
+                    $vm.statusLouver11 = event.value;
+                }
+                this.updateLouverStatus(event.name, event.value);
+            }
+        },
+        queryLouversStatus: function(){
+            let $vm = this;
+            console.log("Preguntando por los louvers");
+            axios.get('http://192.168.0.4:3000/louvers')
+                .then(res => {
+                    $vm.statusLouver1 = res.data[0].status;
+                    $vm.statusLouver2 = res.data[1].status;
+                    $vm.statusLouver3 = res.data[2].status;
+                    $vm.statusLouver4 = res.data[3].status;
+                    $vm.statusLouver5 = res.data[4].status;
+                    $vm.statusLouver6 = res.data[5].status;
+                    $vm.statusLouver7 = res.data[6].status;
+                    $vm.statusLouver8 = res.data[7].status;
+                    $vm.statusLouver9 = res.data[8].status;
+                    $vm.statusLouver10 = res.data[9].status;
+                    $vm.statusLouver11 = res.data[10].status;
+                    $vm.masterStatus = res.data[11].status;
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+        },
+        updateLouverStatus: function(louver, newStatus){
+            axios.post('http://192.168.0.4:3000/louvers/update', {
+                louver: louver,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó el louver");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        updateMasterStatus: function(masterName, newStatus){
+            axios.post('http://192.168.0.4:3000/masters/update', {
+                masterSwitch: masterName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó el switch maestro");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        sliderEvent: function(event){
+            let $vm = this;
+            if(event.name == "main"){
+                $vm.sliderPosition1 = event.position;
+                //$vm.updateSlider(event.name, event.position, "louvers");
+            }
+        },
+        guardarSlider: function(event){
+            if(event.name == "main")
+            {
+                this.updateSlider(event.name, this.sliderPosition1, "louvers");
+            }
+            
+        },
+        updateSlider: function(slider, newPosition, menu){
+            axios.post('http://192.168.0.4:3000/sliders/update', {
+                name: slider,
+                position: newPosition,
+                screen: menu
+            })
+            .then(res =>{
+                console.log("Se actualizó el slider de manera correcta")
+            })
+            .catch( err=> {
+                console.log(err);
+            })
+        },
+        getSlidersValue: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/sliders', {
+                params:{
+                    menu:"louvers"
+                }
+            })
+            .then( res=>{
+                $vm.sliderPosition1 = res.data[0].value;
+                console.log($vm.sliderPosition1)
+                return;
+            })
+            .catch( err=> {
+                console.log(err);
+                return;
+            })
         }
+    },
+    computed: {
+        newSliderPosition1: function(){
+            let $vm = this;
+            console.log("Aquí")
+            return $vm.sliderPosition1;
+        },
+        newMasterStatus: function(){
+            let $vm = this;
+            return $vm.masterStatus;
+        },
+        newStatus1: function(){
+            let $vm = this;
+            console.log(this.statusLouver1);
+            return this.statusLouver1;
+        },
+        newStatus2: function(){
+            let $vm = this;
+            return $vm.statusLouver2;
+        },
+        newStatus3: function(){
+            let $vm = this;
+            return $vm.statusLouver3;
+        },
+        newStatus4: function(){
+            let $vm = this;
+            return $vm.statusLouver4;
+        },
+        newStatus5: function(){
+            let $vm = this;
+            return $vm.statusLouver5;
+        },
+        newStatus6: function(){
+            let $vm = this;
+            return $vm.statusLouver6;
+        },
+        newStatus7: function(){
+            let $vm = this;
+            return $vm.statusLouver7;
+        },
+        newStatus8: function(){
+            let $vm = this;
+            return $vm.statusLouver8;
+        },
+        newStatus9: function(){
+            let $vm = this;
+            return $vm.statusLouver9;
+        },
+        newStatus10: function(){
+            let $vm = this;
+            return $vm.statusLouver10;
+        },
+        newStatus11: function(){
+            let $vm = this;
+            return $vm.statusLouver11;
+        }
+    },
+    mounted: function(state){
+        let $vm = this;
+        // console.log("Montando Louvers");
+        this.queryLouversStatus();
+        this.getSlidersValue();
     }
 }
 </script>

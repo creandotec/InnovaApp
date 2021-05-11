@@ -9,7 +9,7 @@
                 :on-move-should-set-pan-responder-capture="()=>{return true}"
 
                 :source="require('./../../assets/Innova/Multi/cursor2.png')"/> -->
-            <PanGestureHandler :minDeltaX="deltaX" 
+            <PanGestureHandler 
                 :on-handler-state-change="(evt) => adjustThumb(evt)"
                 :on-gesture-event="(evt) => moveCursor(evt)">
                 <thumb-cursor :position="barraValue" resizeMode="stretch"
@@ -23,6 +23,8 @@
 import { Animated, PanResponder } from 'react-native';
 import  {PanGestureHandler} from 'react-native-gesture-handler';
 import {ThumbCursor} from './thumb.js';
+import axios from 'axios';
+
 export default {
     components:{
         Animated, PanGestureHandler, 
@@ -31,32 +33,47 @@ export default {
     },
     props:{
         //step: {type: Number, default: 0}
+        curPosition: {
+            Type: Number,
+            default: 0
+        },
+        name: {
+            Type: String
+        },
+        menu: {
+            Type: String
+        }
     },
     data: function(){
         return{
             barraValue: 0,
-            deltaX: 0,
+            deltaX: 0.5,
+            maxDeltaX: 4,
+            deltaY: 0,
+            deltaDist: 0,
             slideWidth: 0,
             slideInit: 0,
             step: 0,
-            stepInflexion: 0
+            stepInflexion: 0,
+            tempPos: 0,
+            regAddress: 0
         }
     },
     methods:{
         adjustThumb: function(evt){
             let $vm = this;
             let evento = evt.nativeEvent;
-
+            console.log("Evento del cursor");
             if (evento.state == 5){
                 console.log("Se liberó el cursor");
+                
                 var restante = $vm.barraValue % $vm.step;
                 var tempPos = $vm.barraValue - restante;
-                console.log($vm.step);
-                console.log(restante);
-                console.log($vm.barraValue);
+                // console.log(tempPos % $vm.step);
                 tempPos = tempPos / $vm.step;
-                console.log(tempPos);
+                // console.log(tempPos);
                 $vm.barraValue = tempPos * $vm.step;
+                $vm.updateSlider();
             }
         },
         getSlideWidth: function(event){
@@ -73,6 +90,9 @@ export default {
             let $vm = this;
             let cursorX = (position*100/$vm.slideWidth);
 
+            // console.log("La posición del cursor es: ", cursorX);
+            console.log("La posición del dedo es: ", position);
+
             if(Math.abs(position) > 10){
                 return Math.round(cursorX);    
             }
@@ -84,7 +104,7 @@ export default {
         moveCursor: function(evt){
             let $vm = this;
             let evento = evt.nativeEvent;
-            
+            console.log(evento.State);
             if($vm.barraValue <= 95 && $vm.barraValue >=0){
 
                 $vm.barraValue += this.mapCursor(evento.x);
@@ -105,7 +125,55 @@ export default {
                 }
             }
             
+        },
+        getSlidersValue: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/sliders', {
+                params:{
+                    menu:$vm.menu,
+                    slider: $vm.name
+                }
+            })
+            .then( res=>{
+                $vm.barraValue = res.data[0].value;
+                $vm.regAddress = res.data[0].register_address;
+                return;
+            })
+            .catch( err=> {
+                console.log(err);
+                return;
+            })
+        },
+        updateSlider: function(){
+            let $vm = this;
+            axios.post('http://192.168.0.4:3000/sliders/update', {
+                name: $vm.name,
+                position: $vm.barraValue,
+                screen: $vm.menu,
+                registerAddress: $vm.regAddress
+
+            })
+            .then(res =>{
+                console.log("Se actualizó el slider de manera correcta")
+            })
+            .catch( err=> {
+                console.log(err);
+            })
+        },
+    },
+    computed: {
+        getPosition: function(){
+            var data = {};
+            let $vm = this;
+            data.position = $vm.barraValue;
+            data.name = $vm.name;
+            this.$emit('update-slider', data);
+            return $vm.curPosition;
         }
+    },
+    mounted(){
+        // this.barraValue = this.curPosition;
+        this.getSlidersValue();
     }
 }
 </script>

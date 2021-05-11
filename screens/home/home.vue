@@ -1,6 +1,5 @@
 <template>
     <view class="container">
-        
         <StatusBar barStyle="dark-content" backgroundColor="#dcba28"/>
         <SafeAreaView style="flex:1">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
@@ -21,7 +20,8 @@
                             
                             <view class="icon-container">
                                 <Pressable :on-press="() => changeMenu(1)">
-                                    <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" :source="require('./../../assets/Innova/Home/zonesoff.png')"/>
+                                    <image class="icon" style="margin-top:0%; margin-bottom:0%;" 
+                                        resizeMode="contain" :source="newAreasStatus"/>
                                 </Pressable>
                             </view>
                         </view>
@@ -33,7 +33,7 @@
                             <view class="icon-container">
                                 <Pressable :on-press="()=> changeMenu(2)">
                                 <image class="icon" style="margin-top:0%; margin-bottom:0%;" resizeMode="contain" 
-                                    :source="require('./../../assets/Innova/Home/louversoffch.png')"/>
+                                    :source="newLouversStatus"/>
                                 </Pressable>
                             </view>
                         </view>
@@ -129,6 +129,14 @@
 import InnovaHeader from './../../components/InnovaHeader';
 import ScreenTitle from './../../components/ScreenTitle';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import axios from 'axios';
+
+var ws = new WebSocket('ws://192.168.1.13:3000/');
+
+ws.onopen = () => {
+    console.log("Se envió el mensaje");
+    ws.send("something");
+}
 
 export default {
     components:{
@@ -143,7 +151,14 @@ export default {
     },
     data: function(){
         return{
-
+            connection: null,
+            statusAreas: 0,
+            statusLouvers: 0,
+            statusLighting: 0,
+            statusClimate: 0,
+            statusScreens: 0,
+            statusWeather: 0,
+            statusScenes: 0
         }
     },
     methods:{
@@ -169,6 +184,91 @@ export default {
             if(menu == 7){
                 this.navigation.navigate("Scenes");
             }
+        },
+        sendMessage: function(message){
+            console.log(this.connection);
+            this.connection.send(message);
+        },
+        queryMastersStatus: function(){
+            let $vm = this;
+            console.log("Preguntando por los switches")
+            axios.get('http://192.168.0.4:3000/masters')
+                .then(res => {
+                    $vm.statusAreas = res.data[0].status;
+                    $vm.statusLouvers = res.data[1].status;
+                    $vm.statusLighting = res.data[2].status;
+                    $vm.statusClimate = res.data[3].status;
+                    $vm.statusScreens = res.data[4].status;
+                    $vm.statusWeather = res.data[5].status;
+                    $vm.statusScenes = res.data[6].status;
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+        },
+    },
+    computed:{
+        newAreasStatus: function(){
+            let $vm;
+            console.log(this.statusAreas);
+            if (this.statusAreas == 1){
+                return require("../../assets/Innova/Zones/zoneson.png");
+            }
+            else{
+                return require("../../assets/Innova/Zones/zonesoff.png");
+            }
+            // return require("../../assets/Innova/Zones/zonesoff.png");
+        },
+        newLouversStatus: function(){
+            let $vm;
+            if (this.statusLouvers == 1){
+                // require('./../../assets/Innova/Home/louversoffch.png')
+                return require('./../../assets/Innova/Louvers/louverson.png');
+            }
+            else{
+                return require('./../../assets/Innova/Louvers/louversoff.png');
+            }
+        },
+        newLightingStatus: function(){
+            let $vm;
+            return $vm.statusLighting;
+        },
+        newClimateStatus: function(){
+            let $vm;
+            return $vm.statusClimate;
+        },
+        newScreensStatus: function(){
+            let $vm;
+            return $vm.statusScreens;
+        },
+        newWeatherStatus: function(){
+            let $vm;
+            return $vm.statusWeather;
+        },
+        newScenesStatus: function(){
+            let $vm;
+            return $vm.statusScenes;
+        }
+    },
+    mounted: function(state){
+        let $vm = this;
+        $vm.queryMastersStatus();
+    },
+    created(){
+        let $vm = this;
+        console.log("Iniciando websocket");
+        this.connection = new WebSocket('ws://192.168.0.4:3000/', 'echo-protocol');
+
+        this.connection.onopen = function(event) {
+            console.log(event);
+            console.log("Succesfully connected to the echo websocket server");
+            $vm.sendMessage("HOLA");
+        }
+
+        this.connection.onmessage = function(event) {
+            console.log(event);
         }
     }
 }

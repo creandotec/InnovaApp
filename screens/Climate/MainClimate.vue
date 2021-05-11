@@ -10,7 +10,8 @@
 
                 <view class="main-switch-container">
                     <view class="master-container">
-                        <climate-switch master="true"/>
+                        <climate-switch master="true" :status="masterStatus" 
+                            v-on:update-status="(event) => eventoRecibido(event)"/>
 
                         <view class="master-text-container">
                             <text class="innova-master-text">CLIMATE</text>
@@ -51,7 +52,8 @@
                                     <text class="menu-title-center">{{temperature}}°F</text>
                                 </view>
                                 <view style="flex:1; flex-direction:column">
-                                    <ac-switch master="true"/>
+                                    <ac-switch master="true" name="1" :status="newStatus1" 
+                                        v-on:update-status="(event) => eventoRecibido(event) "/>
                                 </view>
                             </view>
                         </view>
@@ -61,19 +63,22 @@
                 </view>
 
                 <view class="default-row-container">
-                    <cilingfan-switch/>
-                    <Innova-Slider/>
+                    <cilingfan-switch name="2" :status="newStatus2" 
+                        v-on:update-status="(event) => eventoRecibido(event) "/>
+                    <Innova-Slider name="ciling_fan" menu="climate"/>
                 </view>
                 
                 <view class="default-row-container">
-                    <mist-switch/>
-                    <Innova-Slider/>
+                    <mist-switch name="3" :status="newStatus3" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
+                    <Innova-Slider name="mist" menu="climate"/>
                     
                 </view>
                 
                 <view class="default-row-container">
-                    <spare-alt-switch/>
-                    <Innova-Slider/>
+                    <spare-alt-switch name="4" :status="newStatus4" 
+                            v-on:update-status="(event) => eventoRecibido(event) "/>
+                    <Innova-Slider name="spare" menu="climate"/>
                 </view>
                 
             </view>
@@ -97,6 +102,7 @@ import AcSwitch from '../../components/Switches/AcSwitch.vue';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import axios from 'axios';
 
 export default {
     components:{
@@ -119,6 +125,11 @@ export default {
     data: function(){
         return{
             temperature: 0.0,
+            statusSwitch1: 0,
+            statusSwitch2: 0,
+            statusSwitch3: 0,
+            statusSwitch4: 0,
+            masterStatus: 0
         }
     },
     methods:{
@@ -145,7 +156,106 @@ export default {
             if(menu == 0){
                 this.navigation.navigate("Home");
             }
+        },
+        eventoRecibido: function(event){
+            let $vm = this;
+            console.log(event.name);
+            if(event.name == "climate"){
+                console.log("Switch maestro");
+                $vm.masterStatus = event.value;
+                this.updateMasterStatus(event.name, event.value);
+            }
+            else{
+                if(event.name == "1"){
+                    $vm.statusSwitch1 = event.value;
+                }
+                else if(event.name == "2"){
+                    $vm.statusSwitch2 = event.value;
+                }
+                else if(event.name == "3"){
+                    $vm.statusSwitch3 = event.value;
+                }
+                else if(event.name == "4"){
+                    $vm.statusSwitch4 = event.value;
+                }
+                
+                this.updateSwitchStatus(event.name, event.value);
+            }
+        },
+        querySwitchStatus: function(){
+            let $vm = this;
+            // console.log("Preguntando por lighting");
+            axios.get('http://192.168.0.4:3000/climate')
+                .then(res => {
+                    $vm.statusSwitch1 = res.data[0].status;
+                    $vm.statusSwitch2 = res.data[1].status;
+                    $vm.statusSwitch3 = res.data[2].status;
+                    $vm.statusSwitch4 = res.data[3].status;
+                    // $vm.statusSwitch5 = res.data[4].status;
+                    // $vm.statusLouver7 = res.data[6].status;
+                    // $vm.statusLouver8 = res.data[7].status;
+                    // $vm.statusLouver9 = res.data[8].status;
+                    // $vm.statusLouver10 = res.data[9].status;
+                    // $vm.statusLouver11 = res.data[10].status;
+                    $vm.masterStatus = res.data[5].status;
+                    console.log(res.data[5].status);
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+        },
+        updateSwitchStatus: function(switchName, newStatus){
+            axios.post('http://192.168.0.4:3000/climate/update', {
+                name: switchName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó climate");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        updateMasterStatus: function(masterName, newStatus){
+            axios.post('http://192.168.0.4:3000/masters/update', {
+                masterSwitch: masterName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó el switch maestro");
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
+    },
+    computed: {
+        newMasterStatus: function(){
+            let $vm = this;
+            return $vm.masterStatus;
+        },
+        newStatus1: function(){
+            let $vm = this;
+            return $vm.statusSwitch1;
+        },
+        newStatus2: function(){
+            let $vm = this;
+            return $vm.statusSwitch2;
+        },
+        newStatus3: function(){
+            let $vm = this;
+            return $vm.statusSwitch3;
+        },
+        newStatus4: function(){
+            let $vm = this;
+            return $vm.statusSwitch4;
+        }
+    },
+    mounted: function(state){
+        let $vm = this;
+        $vm.querySwitchStatus();
     }
 }
 </script>

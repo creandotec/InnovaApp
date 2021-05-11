@@ -14,7 +14,8 @@
                 <view style="flex:8; flex-direction:column">
                     <view class="main-switch-container">
                         <view class="master-container">
-                            <window-switch master="true"/>
+                            <window-switch master="true" :status="newMasterStatus"
+                                v-on:update-status="(event) => eventoRecibido(event)"/>
 
                             <view class="master-text-container">
                                 <text class="innova-master-text">ZONES</text>
@@ -39,23 +40,29 @@
 
                     <view class="zone-control-container">
                         <view style="flex:1; flex-direction:row;">
-                            <zone-switch-1/>
-                            <zone-switch-2/>
-                            <zone-switch-3/>
+                            <zone-switch-1 :status="newStatus1" 
+                                v-on:update-status="(event) => eventoRecibido(event)" />
+                            <zone-switch-2 :status="newStatus2" 
+                                v-on:update-status="(event) => eventoRecibido(event)" />
+                            <zone-switch-3 :status="newStatus3" 
+                                v-on:update-status="(event) => eventoRecibido(event)" />
                         </view>
 
                         <view style="flex:1; flex-direction:row;">
-                            <zone-switch-4/>
-                            <zone-switch-5/>
-                            <zone-switch-6/>
+                            <zone-switch-4 :status="newStatus4" 
+                                v-on:update-status="(event) => eventoRecibido(event)" />
+                            <zone-switch-5 :status="newStatus5" 
+                                v-on:update-status="(event) => eventoRecibido(event)" />
+                            <zone-switch-6 :status="newStatus6" 
+                                v-on:update-status="(event) => eventoRecibido(event)"/>
                         </view>
 
                     </view>
                 </view>
                 
         </ImageBackground>
-        </GestureRecognizer>
-    </view>
+    </GestureRecognizer>
+</view>
     
 </template>
 
@@ -63,6 +70,8 @@
 //import  Slider  from '@react-native-community/slider';
 import { Animated, PanResponder } from 'react-native';
 import  {PanGestureHandler} from 'react-native-gesture-handler';
+
+import axios from 'axios';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -105,17 +114,60 @@ export default {
         ZoneSwitch5,
         ZoneSwitch6,
     },
+    
     props:{
         navigation:{
             type: Object
         }
     },
+
     data: function(){
         return{
             temperature: 0.0,
+            _data: [
+                {'zone_name':"0", 'status':0}
+            ],
+            statusZona1: 0,
+            statusZona2: 0,
+            statusZona3: 0,
+            statusZona4: 0,
+            statusZona5: 0,
+            statusZona6: 0,
+            masterStatus: 0
         }
     },
+
     methods:{
+        eventoRecibido: function(event){
+            let $vm = this;
+            if(event.zone == "zones"){
+                $vm.masterStatus = event.value;
+                this.updateMasterStatus(event.zone, event.value);
+            }
+            else{
+                if(event.zone == "1"){
+                    $vm.statusZona1 = event.value;
+                }
+                else if(event.zone == "2"){
+                    $vm.statusZona2 = event.value;
+                }
+                else if(event.zone == "3"){
+                    $vm.statusZona3 = event.value;
+                }
+                else if(event.zone == "4"){
+                    $vm.statusZona4 = event.value;
+                }
+                else if(event.zone == "5"){
+                    $vm.statusZona5 = event.value;
+                }
+                else if(event.zone == "6"){
+                    $vm.statusZona6 = event.value;
+                }
+                this.updateZoneStatus(event.zone, event.value);
+            }
+            
+
+        },
         enterTimerConfig: function(){
             this.navigation.navigate("Timer");
         },
@@ -139,7 +191,92 @@ export default {
             if(menu == 0){
                 this.navigation.navigate("Home");
             }
+        },
+        getZonesStatus: function(zone){
+            let $vm = this;
+            console.log("Obteniendo status de la zona 1: " + $vm.statusZona1);
+            return $vm.statusZona1;
+        },
+        queryZonesStatus: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/zonas')
+                .then(res => {
+                    
+                    $vm.statusZona1 = res.data[0].status;
+                    $vm.statusZona2 = res.data[1].status;
+                    $vm.statusZona3 = res.data[2].status;
+                    $vm.statusZona4 = res.data[3].status;
+                    $vm.statusZona5 = res.data[4].status;
+                    $vm.statusZona6 = res.data[5].status;
+                    $vm.masterStatus = res.data[6].status;
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+        },
+        updateZoneStatus: function(zona, newStatus){
+            axios.post('http://192.168.0.4:3000/zonas/update', {
+                zone: zona,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó la zona");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        updateMasterStatus: function(masterName, newStatus){
+            axios.post('http://192.168.0.4:3000/masters/update', {
+                masterSwitch: masterName,
+                status: newStatus
+            })
+            .then(res => {
+                console.log("Se actualizó el switch maestro");
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
+
+    },
+
+    computed: {
+        newStatus1: function(){
+            let $vm = this;
+            return $vm.statusZona1;
+        },
+        newStatus2: function(){
+            let $vm = this;
+            return $vm.statusZona2;
+        },
+        newStatus3: function(){
+            let $vm = this;
+            return $vm.statusZona3;
+        },
+        newStatus4: function(){
+            let $vm = this;
+            return $vm.statusZona4;
+        },
+        newStatus5: function(){
+            let $vm = this;
+            return $vm.statusZona5;
+        },
+        newStatus6: function(){
+            let $vm = this;
+            return $vm.statusZona6;
+        },
+        newMasterStatus: function(){
+            let $vm = this;
+            return $vm.masterStatus;
+        }
+    },
+
+    mounted: function(state){
+        let $vm = this;
+        $vm.queryZonesStatus();
     }
 }
 </script>

@@ -17,6 +17,10 @@ export default {
         }
     },
     props: {
+        status:{
+            type: Number,
+            default: 0
+        },
         master: {
             Type: Boolean,
             default: false
@@ -24,19 +28,31 @@ export default {
         size: {
             Type: String,
             default: 'md'
+        },
+        louverNumber: {
+            Type: Number,
+            default: 0,
         }
     },
     methods:{
         switchToggle: function(){
+            var data = {};
             this.initialState = !this.initialState;
-            console.log(this.initialState);
+            if(this.master){
+                data.name = "louvers";
+            }
+            else{
+                data.name = this.louverNumber;
+            }
+            data.value = this.initialState;
+            this.$emit('update-status', data);
+            // console.log(data.zone);
         }
     },
     computed:{
         imageSource: function(){
             let $vm = this;
-            
-            if($vm.initialState == true){
+            if($vm.initialState == true || $vm.status == true){
                 return require("../../assets/Innova/Louvers/louverson.png");
             }
             else{
@@ -53,6 +69,10 @@ export default {
                 return "stretch";
             }
         }
+    },
+    created(){
+        let $vm = this;
+        $vm.initialState = $vm.status;
     }
 }
 </script>
