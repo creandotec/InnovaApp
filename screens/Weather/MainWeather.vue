@@ -28,19 +28,19 @@
                         </view>
                         <view style="flex:1"> </view>
                         <view class="default-row-container">
-                            <Cloud-Switch name="1" :status="newStatus1" 
+                            <Cloud-Switch name="rain" :status="newStatus1" 
                                 v-on:update-status="(event) => eventoRecibido(event) "/>
                             <Innova-Slider menu="weather" name="rain"/>
                         </view>
                         
                         <view class="default-row-container">
-                            <Windsock-Switch name="2" :status="newStatus2" 
+                            <Windsock-Switch name="wind" :status="newStatus2" 
                                 v-on:update-status="(event) => eventoRecibido(event) "/>
                             <Innova-Slider menu="weather" name="wind"/>
                         </view>
                         
                         <view class="default-row-container">
-                            <Ice-Switch name="3" :status="newStatus3" 
+                            <Ice-Switch name="ice" :status="newStatus3" 
                                 v-on:update-status="(event) => eventoRecibido(event) "/>
                             <Innova-Slider menu="weather" name="ice"/>
                         </view>
@@ -130,13 +130,13 @@ export default {
                 this.updateMasterStatus(event.name, event.value);
             }
             else{
-                if(event.name == "1"){
+                if(event.name == "rain"){
                     $vm.statusSwitch1 = event.value;
                 }
-                else if(event.name == "2"){
+                else if(event.name == "wind"){
                     $vm.statusSwitch2 = event.value;
                 }
-                else if(event.name == "3"){
+                else if(event.name == "ice"){
                     $vm.statusSwitch3 = event.value;
                 }
                 else if(event.name == "4"){

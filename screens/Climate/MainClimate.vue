@@ -1,5 +1,7 @@
 <template>
 <view class="container">
+    <StatusBar/>
+    <SafeAreaView style="flex:1">
     <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
@@ -52,7 +54,7 @@
                                     <text class="menu-title-center">{{temperature}}°F</text>
                                 </view>
                                 <view style="flex:1; flex-direction:column">
-                                    <ac-switch master="true" name="1" :status="newStatus1" 
+                                    <ac-switch master="true" name="thermostat" :status="newStatus1" 
                                         v-on:update-status="(event) => eventoRecibido(event) "/>
                                 </view>
                             </view>
@@ -63,20 +65,20 @@
                 </view>
 
                 <view class="default-row-container">
-                    <cilingfan-switch name="2" :status="newStatus2" 
+                    <cilingfan-switch name="ciling_fan" :status="newStatus2" 
                         v-on:update-status="(event) => eventoRecibido(event) "/>
                     <Innova-Slider name="ciling_fan" menu="climate"/>
                 </view>
                 
                 <view class="default-row-container">
-                    <mist-switch name="3" :status="newStatus3" 
+                    <mist-switch name="mist" :status="newStatus3" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
                     <Innova-Slider name="mist" menu="climate"/>
                     
                 </view>
                 
                 <view class="default-row-container">
-                    <spare-alt-switch name="4" :status="newStatus4" 
+                    <spare-alt-switch name="spare" :status="newStatus4" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
                     <Innova-Slider name="spare" menu="climate"/>
                 </view>
@@ -84,6 +86,7 @@
             </view>
         </ImageBackground>
     </GestureRecognizer>
+    </SafeAreaView>
     </view>
 </template>
 
@@ -166,16 +169,16 @@ export default {
                 this.updateMasterStatus(event.name, event.value);
             }
             else{
-                if(event.name == "1"){
+                if(event.name == "thermostat"){
                     $vm.statusSwitch1 = event.value;
                 }
-                else if(event.name == "2"){
+                else if(event.name == "ciling_fan"){
                     $vm.statusSwitch2 = event.value;
                 }
-                else if(event.name == "3"){
+                else if(event.name == "mist"){
                     $vm.statusSwitch3 = event.value;
                 }
-                else if(event.name == "4"){
+                else if(event.name == "spare"){
                     $vm.statusSwitch4 = event.value;
                 }
                 

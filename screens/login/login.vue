@@ -1,6 +1,7 @@
 <template>
     <view class="container">
-        <StatusBar/>
+        <StatusBar barStyle="dark-content" backgroundColor="#dcba28"/>
+        <SafeAreaView style="flex:1">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
         class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
@@ -17,6 +18,7 @@
                 
             </view>
         </ImageBackground>
+        </SafeAreaView>
     </view>
 </template>
 

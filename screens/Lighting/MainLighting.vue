@@ -25,7 +25,7 @@
                     </view>
 
                     <view class="default-row-container">
-                        <gutter-switch name="1" :status="newStatus1" 
+                        <gutter-switch name="gutter" :status="newStatus1" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
 
                         <Innova-Slider name="gutter" menu="lighting" />
@@ -39,7 +39,7 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <louver-light-switch name="2" :status="newStatus2" 
+                        <louver-light-switch name="louver" :status="newStatus2" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
                         <Innova-Slider name="louver" menu="lighting"/>
                         <view class="icon-container">
@@ -51,7 +51,7 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <ceilling-switch name="3" :status="newStatus3" 
+                        <ceilling-switch name="ciling" :status="newStatus3" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
 
                         <Innova-Slider name="ciling" menu="lighting"/>
@@ -64,7 +64,7 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <sconce-switch size="md" name="4" :status="newStatus4" 
+                        <sconce-switch size="md" name="sconce" :status="newStatus4" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
 
                         <Innova-Slider name="sconce" menu="lighting"/>
@@ -73,7 +73,7 @@
                     </view>
                     
                     <view class="default-row-container">
-                        <spare-switch name="5" :status="newStatus5" 
+                        <spare-switch name="spare" :status="newStatus5" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
 
                         <Innova-Slider name="spare" menu="lighting"/>
@@ -165,19 +165,19 @@ export default {
                 this.updateMasterStatus(event.name, event.value);
             }
             else{
-                if(event.name == "1"){
+                if(event.name == "gutter"){
                     $vm.statusSwitch1 = event.value;
                 }
-                else if(event.name == "2"){
+                else if(event.name == "louver"){
                     $vm.statusSwitch2 = event.value;
                 }
-                else if(event.name == "3"){
+                else if(event.name == "ciling"){
                     $vm.statusSwitch3 = event.value;
                 }
-                else if(event.name == "4"){
+                else if(event.name == "sconce"){
                     $vm.statusSwitch4 = event.value;
                 }
-                else if(event.name == "5"){
+                else if(event.name == "spare"){
                     $vm.statusSwitch5 = event.value;
                 }
                 else if(event.name == "6"){
@@ -202,7 +202,7 @@ export default {
                     // $vm.statusLouver9 = res.data[8].status;
                     // $vm.statusLouver10 = res.data[9].status;
                     // $vm.statusLouver11 = res.data[10].status;
-                    $vm.masterStatus = res.data[5].status;
+                    $vm.masterStatus = res.data[14].status;
                     return;
                 })
                 .catch(err => {
