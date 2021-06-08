@@ -2,14 +2,7 @@
     <view class="slider-container" :on-layout="(event)=>getSlideWidth(event)">
         <ImageBackground :source="require('./../assets/Innova/Lighting/barraroja.png')" 
             class="slider-background" resizeMode="stretch">
-            <!-- <image class="slider-thumb" resizeMode="stretch"
-                :on-start-should-set-pan-responder="()=>{return true}"
-                :on-start-should-set-pan-responder-capture="()=>{return true}"
-                :on-move-should-set-responder-capture="()=>{return true}"
-                :on-move-should-set-pan-responder-capture="()=>{return true}"
-
-                :source="require('./../../assets/Innova/Multi/cursor2.png')"/> -->
-            <PanGestureHandler :minDeltaX="deltaX" 
+            <PanGestureHandler
                 :on-handler-state-change="(evt) => adjustThumb(evt)"
                 :on-gesture-event="(evt) => moveCursor(evt)">
                 <thumb-cursor :position="barraValue" resizeMode="stretch"
@@ -84,14 +77,16 @@ export default {
         mapCursor: function(position){
             let $vm = this;
             let cursorX = (position*100/$vm.slideWidth);
+            let roundedCursorX = 0;
 
-            if(Math.abs(position) > 10){
-                return Math.round(cursorX);    
+            roundedCursorX = Math.round(cursorX);
+
+            if(cursorX > 1.5){
+                return 1.5;
             }
             else{
-                return 0;
+                return cursorX;
             }
-            //return Math.round(cursorX);
         },
         moveCursor: function(evt){
             let $vm = this;

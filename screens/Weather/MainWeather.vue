@@ -4,7 +4,8 @@
     <StatusBar/>
 
     <SafeAreaView style="flex:1">
-        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+        <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)"
+            :config="{velocityThreshold:1.0, directionalOffsetThreshold:50}">
             <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
                 class="backgroundImage" resizeMode="stretch">
                 <view class="innova-layout">

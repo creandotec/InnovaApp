@@ -2,7 +2,8 @@
 <view class="container">
     <StatusBar/>
     <SafeAreaView style="flex:1">
-    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)"
+        :config="{velocityThreshold:1.0, directionalOffsetThreshold:50}">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
@@ -131,9 +132,6 @@ export default {
                 this.navigation.navigate("Climate");
             }
             else if(direction == "SWIPE_UP"){
-                this.navigation.navigate("Home");
-            }
-            else if(direction == null){
                 this.navigation.navigate("Home");
             }
         },

@@ -2,7 +2,8 @@
 <view class="container">
     <StatusBar/>
     <SafeAreaView style="flex:1">
-    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)">
+    <GestureRecognizer style="flex:1;flex-direction:column" :on-swipe="(direction, state) => swipeHandler(direction, state)" 
+        :config="{velocityThreshold:1.0, directionalOffsetThreshold:50} ">
         <ImageBackground :source="require('./../../assets/Innova/BG/fondomain.png')"
             class="backgroundImage" resizeMode="stretch">
             <view class="innova-layout">
@@ -35,13 +36,13 @@
                     <view style="flex:1; flex-direction:row;">
                         <view style="flex:1; flex-direction: column; margin-right:3%">
                             <view style="flex:1; flex-direction: column; align-items:center; justify-content:flex-end">
-                                <Pressable :on-press='() => IncreaseTemp()'>
+                                <Pressable class="press-class" :on-press='() => IncreaseTemp()'>
                                     <image style="flex:0.9; margin-top:8%" resizeMode="contain"
                                     :source="require('./../../assets/Innova/Climate/climatedosred.png')"/>
                                 </Pressable>
                             </view>
                             <view style="flex:1; flex-direction: column; align-items:center; justify-content:flex-start">
-                                <Pressable :on-press='() => DecreaseTemp()'>
+                                <Pressable class="press-class" :on-press='() => DecreaseTemp()'>
                                     <image style="flex:0.9; margin-bottom:0%" resizeMode="contain"
                                     :source="require('./../../assets/Innova/Climate/climatedosblue.png')"/>
                                 </Pressable>
@@ -50,11 +51,11 @@
                         
                         <view style="flex:1; flex-direction:column">
                             <view class="menu-button-container">
-                                <view style="flex:0.20;">
+                                <view style="flex:0.20; ">
                                     <text class="menu-title-center">{{temperature}}°F</text>
                                 </view>
-                                <view style="flex:1; flex-direction:column">
-                                    <ac-switch master="true" name="thermostat" :status="newStatus1" 
+                                <view style="flex:1; flex-direction:column;">
+                                    <ac-switch name="thermostat" :status="newStatus1" 
                                         v-on:update-status="(event) => eventoRecibido(event) "/>
                                 </view>
                             </view>
@@ -370,6 +371,14 @@ export default {
         flex: 1;
         flex-direction: column;
         justify-content: center;
+    }
+    .press-class {
+        flex:1;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
+        padding-top:1%;
+        padding-bottom: 1%;
     }
 
 </style>
