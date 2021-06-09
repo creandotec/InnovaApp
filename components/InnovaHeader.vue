@@ -1,6 +1,7 @@
 <template>
     <view class="header">
-        <ws/>
+        <ws :ref="ref => {this.ws = ref}"
+            url="wss://echo.websocket.org/"/>
         <view style="flex:0.35; flex-direction:row; justify-content:center; align-items:stretch;">
             <Pressable :on-press='() => goHome()'>
                 <image class="home-button"
