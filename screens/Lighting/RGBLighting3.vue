@@ -26,19 +26,19 @@
                     </view>
 
                     <view class="default-row-container">
-                        <red-switch/>
+                        <red-switch name="ciling_red" v-on:update-status="(event) => eventoRecibido(event) "/>
 
                         <Innova-Slider-Red name="ciling_red" menu="lighting"/>
                     </view>
                     
                     <view class="default-row-container">
-                        <green-switch/>
+                        <green-switch name="ciling_green" v-on:update-status="(event) => eventoRecibido(event) "/>
                         <Innova-Slider-Green name="ciling_green" menu="lighting"/>
                         
                     </view>
                     
                     <view class="default-row-container">
-                        <blue-switch/>
+                        <blue-switch name="ciling_blue" v-on:update-status="(event) => eventoRecibido(event) "/>
                         <Innova-Slider-Blue name="ciling_blue" menu="lighting"/>
                     </view>
                 </view>
@@ -112,7 +112,44 @@ export default {
             if(menu == 0){
                 this.navigation.navigate("Home");
             }
-        }
+        },
+        eventoRecibido: function(event){
+            let $vm = this;
+            console.log(event.name);
+            console.log(event);
+            if(event.name == "lighting"){
+                $vm.masterStatus = event.value;
+                this.updateMasterStatus(event.name, event.value);
+            }
+            else{
+                if(event.name == "gutter_red"){
+                    $vm.statusSwitch1 = event.value;
+                }
+                else if(event.name == "gutter_green"){
+                    $vm.statusSwitch2 = event.value;
+                }
+                else if(event.name == "gutter_blue"){
+                    $vm.statusSwitch3 = event.value;
+                }
+                this.updateSwitchStatus(event.name, event.value);
+            }
+        },
+        updateSwitchStatus: function(switchName, newStatus){
+            console.log("Enviando a servidor dato se switch");
+            axios.post('http://192.168.0.4:3000/lighting/update', {
+                name: switchName,
+                status: newStatus
+            })
+            .then(res => {
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'lighting', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
     }
 }
 </script>

@@ -80,6 +80,8 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import axios from 'axios';
 
+import {getWSStatus, wsClient} from '../../components/Websocket';
+
 export default {
     components:{
         "Innova-Slider":Slider,
@@ -88,7 +90,8 @@ export default {
         WeatherSwitch,
         CloudSwitch,
         IceSwitch,
-        WindsockSwitch
+        WindsockSwitch,
+        wsClient, getWSStatus
     },
     props:{
         navigation:{
@@ -176,7 +179,10 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó weather");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'zones', 'name':'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -188,7 +194,10 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'zones', 'name':'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -220,6 +229,16 @@ export default {
     mounted: function(state){
         let $vm = this;
         $vm.querySwitchStatus();
+
+        if(getWSStatus()){
+            wsClient.onmessage = function(event){
+                console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == 'weather' && message.name == 'switch'){
+                    $vm.querySwitchStatus();
+                }
+            }
+        }
     }
 }
 </script>

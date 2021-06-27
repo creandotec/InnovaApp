@@ -25,6 +25,7 @@ import rgb2 from './screens/Lighting/RGBLighting2';
 import rgb3 from './screens/Lighting/RGBLighting3';
 
 import WS from 'react-native-websocket';
+import websocket from './components/Websocket';
 
 
 const StackNavigator = createStackNavigator(
@@ -45,7 +46,7 @@ const StackNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Login',
-    headerMode: 'none'
+    headerMode: 'none',
   },
 );
 

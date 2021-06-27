@@ -26,27 +26,27 @@
                     </view>
 
                     <view class="default-row-container">
-                        <scene-config SceneNumber="1"/>
+                        <scene-config SceneNumber="1" :Name="_sceneName1"/>
                     </view>
                     
                     <view class="default-row-container">
-                        <scene-config SceneNumber="2"/>
+                        <scene-config SceneNumber="2" :Name="_sceneName2"/>
                     </view>
                     
                     <view class="default-row-container">
-                        <scene-config SceneNumber="3"/>
+                        <scene-config SceneNumber="3" :Name="sceneName3"/>
                     </view>
                     
                     <view class="default-row-container">
-                        <scene-config SceneNumber="4"/>
+                        <scene-config SceneNumber="4" :Name="sceneName4"/>
                     </view>
                     
                     <view class="default-row-container">
-                        <scene-config SceneNumber="5"/>
+                        <scene-config SceneNumber="5" :Name="sceneName5"/>
                     </view>
 
                     <view class="default-row-container">
-                        <scene-config SceneNumber="6"/>
+                        <scene-config SceneNumber="6" :Name="sceneName6"/>
                     </view>
                 </view>
             </view>
@@ -64,6 +64,7 @@ import SceneSwitch from '../../components/Switches/SceneSwitch.vue';
 import SceneConfig from '../../components/SceneConfig.vue'
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import axios from 'axios';
 
 export default {
     components:{
@@ -72,35 +73,69 @@ export default {
         ScreenTitle, SceneSwitch
     },
     props:{
-     
         navigation:{
             type: Object
         }
     },
     data: function(){
         return{
-
+            sceneName1:'',
+            sceneName2:'',
+            sceneName3:'',
+            sceneName4:'',
+            sceneName5:'',
+            sceneName6:'',
         }
     },
     methods:{
         swipeHandler: function(direction, state){
-            console.log(direction);
+            // console.log(direction);
             //console.log(state);
             if(direction == "SWIPE_LEFT"){
-                this.navigation.navigate("Climate");
+                this.navigation.replace("Climate");
             }
             else if(direction == "SWIPE_RIGHT"){
-                this.navigation.navigate("Louvers");
+                this.navigation.replace("Louvers");
             }
             else if(direction == "SWIPE_UP"){
-                this.navigation.navigate("Home");
+                this.navigation.replace("Home");
             }
         },
         changeMenu: function(menu){
             if(menu == 0){
-                this.navigation.navigate("Home");
+                this.navigation.replace("Home");
             }
+        },
+        getNames: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/scenes/names')
+                .then(res => {
+                    // console.log(res.data);
+                    $vm.sceneName1 = res.data[0].name;
+                    $vm.sceneName2 = res.data[1].name;
+                    $vm.sceneName3 = res.data[2].name;
+                    $vm.sceneName4 = res.data[3].name;
+                    $vm.sceneName5 = res.data[4].name;
+                    $vm.sceneName6 = res.data[5].name;
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         }
+    },
+    mounted: function(){
+        let $vm = this;
+        $vm.getNames();
+    },
+    computed: {
+        _sceneName1: function(){
+            let $vm = this;
+            return $vm.sceneName1;
+        },
+        _sceneName2: function(){
+            let $vm = this;
+            return $vm.sceneName2;
+        },
     }
 }
 </script>

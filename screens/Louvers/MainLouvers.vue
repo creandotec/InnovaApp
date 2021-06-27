@@ -102,6 +102,7 @@ import SunSwitch from './../../components/Switches/SunSwitch.vue';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import axios from 'axios';
+import {getWSStatus, wsClient} from '../../components/Websocket';
 export default {
     components:{
         "Innova-Slider":Slider,
@@ -109,7 +110,8 @@ export default {
         ScreenTitle,
         'louver-switch':LouverSwitch,
         WeatherSwitch,
-        SunSwitch
+        SunSwitch,
+        wsClient, getWSStatus
     },
     props:{
         navigation:{
@@ -144,12 +146,12 @@ export default {
                 this.navigation.navigate("Zones");
             }
             else if(direction == "SWIPE_UP"){
-                this.navigation.navigate("Home");
+                this.navigation.push("Home");
             }
         },
         changeMenu: function(menu){
             if(menu == 0){
-                this.navigation.navigate("Home");
+                this.navigation.push("Home");
             }
         },
         eventoRecibido: function(event){
@@ -226,7 +228,11 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó el louver");
+                // console.log("Se actualizó el louver");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'louvers', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -238,7 +244,11 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó el switch maestro");
+                // console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'louvers', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -349,7 +359,21 @@ export default {
         let $vm = this;
         // console.log("Montando Louvers");
         this.queryLouversStatus();
-        this.getSlidersValue();
+        $vm.getSlidersValue();
+
+        if(getWSStatus()){
+            wsClient.onmessage = function(event){
+                // console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == 'louvers' && message.name == 'switch'){
+                    // console.log('Actualizar iluminación');
+                    $vm.queryLouversStatus();
+                }
+                else if(message.action == 'update' && message.screen == 'louvers' && message.name == 'slider'){
+                    $vm.getSlidersValue();
+                }
+            }
+        }
     }
 }
 </script>

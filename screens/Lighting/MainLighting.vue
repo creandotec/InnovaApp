@@ -103,6 +103,7 @@ import ScreenTitle from "./../../components/ScreenTitle";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import axios from 'axios';
+import {getWSStatus, wsClient} from '../../components/Websocket';
 
 export default {
     components:{
@@ -115,6 +116,7 @@ export default {
         LouverLightSwitch,
         CeillingSwitch,
         SpareSwitch,
+        wsClient, getWSStatus
     },
     props:{
      
@@ -207,7 +209,7 @@ export default {
                     return;
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     return;
                 })
         },
@@ -217,7 +219,10 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó iluminación");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'lighting', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -230,6 +235,10 @@ export default {
             })
             .then(res => {
                 console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'lighting', 'name':'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -270,6 +279,17 @@ export default {
     mounted: function(state){
         let $vm = this;
         $vm.querySwitchStatus();
+
+        if(getWSStatus()){
+            wsClient.onmessage = function(event){
+                console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == 'lighting' && message.name == 'switch'){
+                    // console.log('Actualizar iluminación');
+                    $vm.querySwitchStatus();
+                }
+            }
+        }
     }
 }
 </script>

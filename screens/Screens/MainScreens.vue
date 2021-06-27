@@ -89,7 +89,7 @@ import SunSwitch from './../../components/Switches/SunSwitch.vue';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import axios from 'axios';
-
+import {getWSStatus, wsClient} from '../../components/Websocket';
 export default {
     components:{
         "Innova-Slider":Slider,
@@ -98,7 +98,8 @@ export default {
         ScreenSwitch,
         ScreenSwitchAlt,
         SunSwitch,
-        WeatherSwitch
+        WeatherSwitch,
+        wsClient, getWSStatus
     },
     props:{
         navigation:{
@@ -132,7 +133,7 @@ export default {
                 this.navigation.navigate("Climate");
             }
             else if(direction == "SWIPE_UP"){
-                this.navigation.navigate("Home");
+                this.navigation.push("Home");
             }
         },
         changeMenu: function(menu){
@@ -215,7 +216,11 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó screens");
+                // console.log("Se actualizó screens");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'screens', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -227,7 +232,11 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó el switch maestro");
+                // console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'screens', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -288,6 +297,15 @@ export default {
     mounted: function(state){
         let $vm = this;
         $vm.querySwitchStatus();
+
+        wsClient.addEventListener('message', function(event){
+            // console.log(event.data);
+            let message = JSON.parse(event.data);
+            if(message.action == 'update' && message.screen == 'screens' && message.name == 'switch'){
+                // console.log('Actualizar iluminación');
+                $vm.querySwitchStatus();
+            }
+        });
     }
 }
 </script>

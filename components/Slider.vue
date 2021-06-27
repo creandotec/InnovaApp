@@ -18,11 +18,14 @@ import  {PanGestureHandler} from 'react-native-gesture-handler';
 import {ThumbCursor} from './thumb.js';
 import axios from 'axios';
 
+import {getWSStatus, wsClient} from './Websocket';
+
 export default {
     components:{
         Animated, PanGestureHandler, 
         "thumb-cursor":ThumbCursor,
         PanResponder,
+        wsClient, getWSStatus
     },
     props:{
         //step: {type: Number, default: 0}
@@ -49,7 +52,8 @@ export default {
             step: 0,
             stepInflexion: 0,
             tempPos: 0,
-            regAddress: 0
+            regAddress: 0,
+            _name: ""
         }
     },
     methods:{
@@ -117,10 +121,11 @@ export default {
         },
         getSlidersValue: function(){
             let $vm = this;
+            console.log($vm._name);
             axios.get('http://192.168.0.4:3000/sliders', {
                 params:{
                     menu:$vm.menu,
-                    slider: $vm.name
+                    slider: $vm._name
                 }
             })
             .then( res=>{
@@ -143,7 +148,11 @@ export default {
 
             })
             .then(res =>{
-                console.log("Se actualizó el slider de manera correcta")
+                console.log($vm.name);
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':$vm.menu, 'name':'slider'});
+                    wsClient.send(json_message);
+                }
             })
             .catch( err=> {
                 console.log(err);
@@ -162,7 +171,24 @@ export default {
     },
     mounted(){
         // this.barraValue = this.curPosition;
-        this.getSlidersValue();
+        let $vm = this;
+        $vm._name = $vm.name;
+        $vm.getSlidersValue();
+        if(getWSStatus()){
+            wsClient.addEventListener('message', function(event){
+                console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == $vm.menu  && message.name== 'slider'){
+                    $vm.getSlidersValue();
+                    console.log("Actualizar slider");
+                }
+                else{
+                    console.log($vm.menu);
+                    console.log($vm.name);
+                    console.log("El mensaje no era para mí")
+                }
+            })
+        }
     }
 }
 </script>

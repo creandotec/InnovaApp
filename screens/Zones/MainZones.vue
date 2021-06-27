@@ -95,7 +95,7 @@ import ZoneSwitch3 from '../../components/Switches/Zones/ZoneSwitch3.vue';
 import ZoneSwitch4 from '../../components/Switches/Zones/ZoneSwitch4.vue';
 import ZoneSwitch5 from '../../components/Switches/Zones/ZoneSwitch5.vue';
 import ZoneSwitch6 from '../../components/Switches/Zones/ZoneSwitch6.vue';
-
+import {getWSStatus, wsClient} from '../../components/Websocket';
 
 export default {
     components:{
@@ -116,6 +116,7 @@ export default {
         ZoneSwitch4,
         ZoneSwitch5,
         ZoneSwitch6,
+        wsClient, getWSStatus
     },
     
     props:{
@@ -225,7 +226,10 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó la zona");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'zones'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -237,7 +241,11 @@ export default {
                 status: newStatus
             })
             .then(res => {
-                console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'zones'});
+                    wsClient.send(json_message);
+                }
+                
             })
             .catch(err => {
                 console.log(err);
@@ -280,6 +288,17 @@ export default {
     mounted: function(state){
         let $vm = this;
         $vm.queryZonesStatus();
+
+        if(getWSStatus()){
+            wsClient.onmessage = function(event){
+                console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == 'zones'){
+                    // console.log('Actualizar zonas');
+                    $vm.queryZonesStatus();
+                }
+            }
+        }
     }
 }
 </script>

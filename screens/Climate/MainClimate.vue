@@ -26,10 +26,10 @@
                 <view class="double-row-container">
                     <view class="menu-button-container">
                         <view style="flex:0.20;">
-                            <text class="menu-title-center">0.0°F</text>
+                            <text class="menu-title-center">{{_temperature}}°F</text>
                         </view>
                         <view>
-                            <text class="menu-title-center">0%</text>
+                            <text class="menu-title-center">{{_humidity}}%</text>
                         </view>
                     </view>
 
@@ -79,9 +79,9 @@
                 </view>
                 
                 <view class="default-row-container">
-                    <spare-alt-switch name="spare" :status="newStatus4" 
+                    <spare-alt-switch name="spare_fan" :status="newStatus4" 
                             v-on:update-status="(event) => eventoRecibido(event) "/>
-                    <Innova-Slider name="spare" menu="climate"/>
+                    <Innova-Slider name="spare_fan" menu="climate"/>
                 </view>
                 
             </view>
@@ -107,6 +107,7 @@ import AcSwitch from '../../components/Switches/AcSwitch.vue';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import axios from 'axios';
+import { getWSStatus, wsClient, myEmitter, getWeatherReading } from '../../components/Websocket';
 
 export default {
     components:{
@@ -119,7 +120,9 @@ export default {
         CilingfanSwitch,
         MistSwitch,
         SpareAltSwitch,
-        AcSwitch
+        AcSwitch,
+        wsClient, getWSStatus, 
+        myEmitter, getWeatherReading
     },
     props:{
         navigation:{
@@ -133,7 +136,9 @@ export default {
             statusSwitch2: 0,
             statusSwitch3: 0,
             statusSwitch4: 0,
-            masterStatus: 0
+            masterStatus: 0,
+            temp: null,
+            humidity: null
         }
     },
     methods:{
@@ -147,7 +152,7 @@ export default {
                 this.navigation.navigate("Lighthing");
             }
             else if(direction == "SWIPE_UP"){
-                this.navigation.navigate("Home");
+                this.navigation.push("Home");
             }
         },
         IncreaseTemp: function(){
@@ -179,7 +184,7 @@ export default {
                 else if(event.name == "mist"){
                     $vm.statusSwitch3 = event.value;
                 }
-                else if(event.name == "spare"){
+                else if(event.name == "spare_fan"){
                     $vm.statusSwitch4 = event.value;
                 }
                 
@@ -217,6 +222,10 @@ export default {
             })
             .then(res => {
                 console.log("Se actualizó climate");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'climate', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -229,6 +238,10 @@ export default {
             })
             .then(res => {
                 console.log("Se actualizó el switch maestro");
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':'climate', 'name': 'switch'});
+                    wsClient.send(json_message);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -255,11 +268,36 @@ export default {
         newStatus4: function(){
             let $vm = this;
             return $vm.statusSwitch4;
+        },
+        _temperature: function(){
+            let $vm = this;
+            return $vm.temp;
+        },
+        _humidity: function(){
+            let $vm = this;
+            return $vm.humidity;
         }
     },
     mounted: function(state){
         let $vm = this;
         $vm.querySwitchStatus();
+
+        $vm.temp = getWeatherReading().temperature;
+        $vm.humidity = getWeatherReading().humidity;
+
+        wsClient.addEventListener('message', function(event){
+            // console.log(event.data);
+            let message = JSON.parse(event.data);
+            if(message.action == 'update' && message.screen == 'climate' && message.name == 'switch'){
+                // console.log('Actualizar iluminación');
+                $vm.querySwitchStatus();
+            }
+        })
+
+        myEmitter.on('newread', function(read){
+            $vm.temp = read.temperature;
+            $vm.humidity = read.humidity;
+        })
     }
 }
 </script>

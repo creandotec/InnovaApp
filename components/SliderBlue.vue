@@ -17,12 +17,14 @@ import { Animated, PanResponder } from 'react-native';
 import  {PanGestureHandler} from 'react-native-gesture-handler';
 import {ThumbCursor} from './thumb2.js';
 import axios from 'axios';
+import {getWSStatus, wsClient} from './Websocket';
 
 export default {
     components:{
         Animated, PanGestureHandler, 
         "thumb-cursor":ThumbCursor,
         PanResponder,
+        wsClient, getWSStatus
     },
     props:{
         //step: {type: Number, default: 0}
@@ -138,7 +140,10 @@ export default {
                 registerAddress: $vm.regAddress
             })
             .then(res =>{
-                console.log("Se actualizó el slider de manera correcta")
+                if(getWSStatus()){
+                    let json_message = JSON.stringify({'action':'update', 'screen':$vm.menu, 'name':$vm.name});
+                    wsClient.send(json_message);
+                }
             })
             .catch( err=> {
                 console.log(err);
@@ -157,7 +162,18 @@ export default {
     },
     mounted(){
         // this.barraValue = this.curPosition;
-        this.getSlidersValue();
+        let $vm = this;
+        $vm.getSlidersValue();
+
+        if(getWSStatus()){
+            wsClient.onmessage = function(event){
+                console.log(event.data);
+                let message = JSON.parse(event.data);
+                if(message.action == 'update' && message.screen == $vm.menu && message.name== $vm.name){
+                    $vm.getSlidersValue();
+                }
+            }
+        }
     }
 }
 </script>

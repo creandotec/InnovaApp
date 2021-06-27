@@ -24,12 +24,19 @@ export default {
         size: {
             Type: String,
             default: 'md'
+        },
+        name: {
+            Type: String,
+            default: 0
         }
     },
     methods:{
         switchToggle: function(){
+            var data = {};
             this.initialState = !this.initialState;
-            console.log(this.initialState);
+            data.name = this.name;
+            data.value = this.initialState;
+            this.$emit('update-status', data);
         }
     },
     computed:{

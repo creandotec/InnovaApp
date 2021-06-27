@@ -9,7 +9,7 @@
         </view>
 
         <view style="flex:4; flex-direction:row; justify-content:center; align-items:flex-end;">
-            <text-input :value="sceneName" text-align="center" :on-change-text="(text)=>setSceneName(text)"
+            <text-input :value="name" text-align="center" :on-change-text="(text)=>setSceneName(text)"
                 style="flex:1; color:white; height:100%; border-bottom-color:rgba(192, 192, 5, 0.76); border-bottom-width: 2;">
 
             </text-input>
@@ -25,36 +25,88 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     props:{
         SceneNumber: {
             type:String,
             default:"1",
             required: true
+        },
+        Name: {
+            type: String,
+            required: true
         }
     },
     data: function(){
         return{
-            sceneName: "Name",
+            name: '',
             initialState: false,
             saveState: false,
         }
     },
     methods:{
+        getNames: function(){
+            let $vm = this;
+            axios.get('http://192.168.0.4:3000/scenes/names')
+                .then(res => {
+                    // console.log(res.data);
+                    $vm.name = res.data[parseInt($vm.SceneNumber) - 1].name;
+                    
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
         setSceneName: function(text){
-            this.sceneName = text;
+            this.name = text;
         },
         toggleSwitch: function(){
             this.initialState = !this.initialState;
+            this.loadScene();
         },
         toggleSave: function(){
-            this.saveState = !this.saveState;
+            this.saveState = true;
+            this.saveScene();
+            setTimeout(()=>{
+                this.saveState = false;
+            }, 300);
+        },
+        saveScene: function(){
+            let $vm = this;
+            // $vm.name = $vm.sceneName;
+            axios.post('http://192.168.0.4:3000/scenes/save', {
+                scene: $vm.SceneNumber,
+                name: $vm.name
+            })
+            .then(res => {
+                // console.log(res);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        },
+        loadScene: function(){
+            let $vm = this;
+            axios.post('http://192.168.0.4:3000/scenes/load', {
+                scene: $vm.SceneNumber
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
         }
+    },
+    mounted: function(){
+        this.getNames();
     },
     computed:{
         sceneSwitchSource: function () {
             let $vm = this;
-            console.log("Cambiando el estado del switch")
+            
             if(this.initialState == false)
             {
                 if($vm.SceneNumber == "1"){
@@ -107,6 +159,7 @@ export default {
         saveSceneSource: function(){
             let $vm = this;
             if(this.saveState == false){
+                
                 if($vm.SceneNumber == "1"){
                 return require('../assets/Innova/Scenes/saveunooff.png')
                 }
@@ -130,6 +183,7 @@ export default {
                 }
             }
             else{
+                // setTimeout(()=> {this.saveState = false}, 200);
                 if($vm.SceneNumber == "1"){
                     return require('../assets/Innova/Scenes/saveunoon.png')
                 }
@@ -153,6 +207,9 @@ export default {
                 }
             }
             
+        },
+        sceneName: function(){
+            return this.Name;
         }
     }
 }

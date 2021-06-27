@@ -48,7 +48,7 @@
                             <view class="icon-container">
                                 <Pressable :on-press="()=> changeMenu(3)">
                                     <image class="icon" resizeMode="contain" 
-                                    :source="require('./../../assets/Innova/Home/lightoff.png')"/>
+                                    :source="newLightingStatus"/>
                                 </Pressable>
                             </view>
                         </view>
@@ -60,7 +60,7 @@
                             <view class="icon-container">
                                 <Pressable :on-press="()=> changeMenu(4)">
                                     <image class="icon" resizeMode="contain" 
-                                    :source="require('./../../assets/Innova/Home/climateselectoff.png')"/>
+                                    :source="newClimateStatus"/>
                                 </Pressable>
                             </view>
                         </view>
@@ -87,7 +87,7 @@
                             <view class="icon-container">
                                 <Pressable :on-press="()=> changeMenu(6)">    
                                     <image class="icon" resizeMode="contain" 
-                                    :source="require('./../../assets/Innova/Home/weatheroff.png')"/>
+                                    :source="newWeatherStatus"/>
                                 </Pressable>
                             </view>
                         </view>
@@ -131,12 +131,12 @@ import ScreenTitle from './../../components/ScreenTitle';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import axios from 'axios';
 
-var ws = new WebSocket('ws://192.168.1.13:3000/');
+// var ws = new WebSocket('ws://192.168.1.13:3000/');
 
-ws.onopen = () => {
-    console.log("Se envió el mensaje");
-    ws.send("something");
-}
+// ws.onopen = () => {
+//     console.log("Se envió el mensaje");
+//     ws.send("something");
+// }
 
 export default {
     components:{
@@ -164,34 +164,34 @@ export default {
     methods:{
         changeMenu: function(menu){
             if(menu == 1){
-                this.navigation.navigate("Zones");
+                this.navigation.replace("Zones");
             }
             if(menu == 2){
-                this.navigation.navigate("Louvers");
+                this.navigation.replace("Louvers");
             }
             if(menu == 3){
-                this.navigation.navigate("Lighthing");
+                this.navigation.replace("Lighthing");
             }
             if(menu == 4){
-                this.navigation.navigate("Climate");
+                this.navigation.replace("Climate");
             }
             if(menu == 5){
-                this.navigation.navigate("Screens");
+                this.navigation.replace("Screens");
             }
             if(menu == 6){
-                this.navigation.navigate("Weather");
+                this.navigation.replace("Weather");
             }
             if(menu == 7){
-                this.navigation.navigate("Scenes");
+                this.navigation.replace("Scenes");
             }
         },
         sendMessage: function(message){
-            console.log(this.connection);
+            // console.log(this.connection);
             this.connection.send(message);
         },
         queryMastersStatus: function(){
             let $vm = this;
-            console.log("Preguntando por los switches")
+            // console.log("Preguntando por los switches")
             axios.get('http://192.168.0.4:3000/masters')
                 .then(res => {
                     $vm.statusAreas = res.data[0].status;
@@ -204,15 +204,14 @@ export default {
                     return;
                 })
                 .catch(err => {
-                    console.log(err);
-                    return;
+                    console.log("Error de conexión");
                 })
         },
     },
     computed:{
         newAreasStatus: function(){
             let $vm;
-            console.log(this.statusAreas);
+            // console.log(this.statusAreas);
             if (this.statusAreas == 1){
                 return require("../../assets/Innova/Zones/zoneson.png");
             }
@@ -233,11 +232,23 @@ export default {
         },
         newLightingStatus: function(){
             let $vm;
-            return $vm.statusLighting;
+            if (this.statusLighting == 1){
+                // require('./../../assets/Innova/Home/louversoffch.png')
+                return require('./../../assets/Innova/Lighting/lighton.png');
+            }
+            else{
+                return require('./../../assets/Innova/Lighting/lightoff.png');
+            }
         },
         newClimateStatus: function(){
             let $vm;
-            return $vm.statusClimate;
+            if (this.statusClimate == 1){
+                // require('./../../assets/Innova/Home/louversoffch.png')
+                return require('./../../assets/Innova/Home/climateselecton.png');
+            }
+            else{
+                return require('./../../assets/Innova/Home/climateselectoff.png');
+            }
         },
         newScreensStatus: function(){
             let $vm;
@@ -245,7 +256,13 @@ export default {
         },
         newWeatherStatus: function(){
             let $vm;
-            return $vm.statusWeather;
+            if(this.statusWeather == 1){
+                return require('./../../assets/Innova/Home/weatheron.png');
+            }
+            else{
+                return require('./../../assets/Innova/Home/weatheroff.png');
+            }
+            // return $vm.statusWeather;
         },
         newScenesStatus: function(){
             let $vm;
@@ -258,18 +275,6 @@ export default {
     },
     created(){
         let $vm = this;
-        console.log("Iniciando websocket");
-        this.connection = new WebSocket('ws://192.168.0.4:3000/', 'echo-protocol');
-
-        this.connection.onopen = function(event) {
-            console.log(event);
-            console.log("Succesfully connected to the echo websocket server");
-            $vm.sendMessage("HOLA");
-        }
-
-        this.connection.onmessage = function(event) {
-            console.log(event);
-        }
     }
 }
 </script>
